@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos à Venda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: #f8f8f8;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #e53935;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.novo {
+            background: #43a047;
+        }
+
+        .product-info {
+            padding: 1.4rem;
+        }
+
+        .product-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+            line-height: 1.4;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1b5e20;
+        }
+
+        .product-price-original {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            font-size: 0.75rem;
+            background: #fff3e0;
+            color: #e65100;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 92%;
+            max-height: 92%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 1rem;
+            right: 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            line-height: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: #0f3460;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            header h1 {
+                font-size: 1.7rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .product-image-container {
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏷️ Desapego — Tudo à Venda!</h1>
+        <p>Produtos em ótimo estado com até 35% de desconto do valor de novo</p>
+    </header>
+
+    <div class="container">
+        <div class="products-grid">
+
+            <!-- 1. TV Panasonic Smart 32" -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/01-tv-panasonic-smart.jpeg" alt="TV Panasonic Smart 32 polegadas com Chromecast" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">TV Panasonic Smart 32" com Chromecast</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 550</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Arara de Roupas -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/02-arara-roupas.jpeg" alt="Arara de Roupas Dupla Roxa com Rodízios" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Cabideiros Duplos Roxos com Rodízios</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 250</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Escrivaninha Gamer -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/03-escrivaninha-gamer.jpeg" alt="Escrivaninha Gamer Preta com Nichos" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Escrivaninha Gamer Preta com Nichos + Luminária de Mesa</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 280</span>
+                        <span class="discount-badge">Mesa R$240 + Luminária R$40</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Varal de Chão -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/04-varal-chao.jpeg" alt="Varal de Chão Dobrável com Abas" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Varal de Chão Dobrável com Abas (Estender Roupas)</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 75</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Geladeira Electrolux -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/05-geladeira-electrolux.jpeg" alt="Geladeira Electrolux Frost Free Duplex" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Geladeira Electrolux Frost Free Duplex (Turbo Freezer)</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 1.400</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Balcão + Cooktop -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/06-balcao-cooktop-ref.jpeg" alt="Balcão de Cozinha MDF com Cooktop 4 Bocas" class="product-image" onclick="openModal(this)">
+                    <span class="badge novo">Novo</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Balcão de Cozinha MDF + Cooktop 4 Bocas (Novo na caixa)</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 600</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Mesa de Jantar -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/07-mesa-jantar.jpeg" alt="Mesa de Jantar MDF Cor Clara" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Mesa de Cozinha MDF Cor Clara (4 lugares)</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 260</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Travessas Cerâmica -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/08-travessas-ceramica.jpeg" alt="Kit 3 Travessas de Cerâmica Azul" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Kit 3 Travessas de Cerâmica Azul (P, M, G)</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 80</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Micro-ondas Brastemp -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/09-microondas-brastemp.jpeg" alt="Micro-ondas Brastemp Ative!" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Micro-ondas Brastemp Ative! 30L</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 160</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Grill Cadence -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/10-grill-cadence.jpeg" alt="Grill e Sanduicheira Cadence" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Sanduicheira Cadence Inox</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 65</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Panela Mondial -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/11-panela-mondial.jpeg" alt="Panela Elétrica de Arroz Mondial Fast Rice 5" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Panela Elétrica de Arroz Mondial Fast Rice 5</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 130</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. Air Fryer Mondial -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/12-airfryer-mondial.jpeg" alt="Air Fryer Mondial Family 4L" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Air Fryer Mondial Family 4L</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 140</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. Aspirador Mondial -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/13-aspirador-mondial.jpeg" alt="Aspirador de Pó Vertical Mondial 1000W" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Aspirador de Pó Vertical Mondial 1000W</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 95</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. Lavadora Electrolux -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/14-lavadora-electrolux.jpeg" alt="Lavadora de Roupas Electrolux Turbo Capacidade 12kg" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Lavadora Electrolux Turbo Capacidade 12kg</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 650</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. Ventilador Britânia -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/15-ventilador-britania.jpeg" alt="Ventilador de Coluna Britânia 160W Turbo" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Ventilador de Coluna Britânia Turbo 160W</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 110</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. Aquecedor Good&Go -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/16-aquecedor-goodgo.jpeg" alt="Aquecedor e Termoventilador Good and Go" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Aquecedor / Termoventilador Good&Go</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 70</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 17. Frigobar Consul -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/17-frigobar-consul.jpeg" alt="Frigobar Consul Compacto 120L" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Frigobar Consul Compacto 120L</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 575</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 18. Monitor LG -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="img/18-monitor-lg.jpeg" alt="Monitor LG Flatron W2043S 20 polegadas" class="product-image" onclick="openModal(this)">
+                    <span class="badge">Usado</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Monitor LG Flatron W2043S 20" + Adaptador HDMI-VGA</div>
+                    <div class="price-container">
+                        <span class="product-price">R$ 120</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Interessado em algum produto? Entre em contato!</p>
+    </footer>
+
+    <!-- Modal para visualizar imagem ampliada -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImage" src="" alt="Imagem ampliada">
+    </div>
+
+    <script>
+        function openModal(imgElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imgElement.src;
+            modalImg.alt = imgElement.alt;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
