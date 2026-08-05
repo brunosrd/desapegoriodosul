@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos à Venda</title>
+    <title>Desapego Rio do Sul</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,23 +22,10 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
-        header h1 {
-            font-size: 2.4rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
-        }
+        header h1 { font-size: 2.4rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        header p { font-size: 1.1rem; opacity: 0.85; font-weight: 300; }
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.85;
-            font-weight: 300;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem 3rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem 3rem; }
 
         .products-grid {
             display: grid;
@@ -63,7 +46,8 @@
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
         }
 
-        .product-image-container {
+        /* Carousel */
+        .carousel {
             position: relative;
             width: 100%;
             height: 300px;
@@ -71,17 +55,61 @@
             background: #f8f8f8;
         }
 
-        .product-image {
-            width: 100%;
+        .carousel-track {
+            display: flex;
             height: 100%;
-            object-fit: cover;
-            cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .product-image:hover {
-            transform: scale(1.05);
+        .carousel-track img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
         }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transition: background 0.2s;
+        }
+
+        .carousel-dots .dot.active { background: white; }
 
         .badge {
             position: absolute;
@@ -94,15 +122,12 @@
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            z-index: 2;
         }
 
-        .badge.novo {
-            background: #43a047;
-        }
+        .badge.novo { background: #43a047; }
 
-        .product-info {
-            padding: 1.4rem;
-        }
+        .product-info { padding: 1.4rem; }
 
         .product-name {
             font-size: 1.05rem;
@@ -112,41 +137,18 @@
             line-height: 1.4;
         }
 
-        .price-container {
-            display: flex;
-            align-items: baseline;
-            gap: 0.8rem;
-        }
-
         .product-price {
             font-size: 1.6rem;
             font-weight: 800;
             color: #1b5e20;
         }
 
-        .product-price-original {
-            font-size: 0.9rem;
-            color: #999;
-            text-decoration: line-through;
-        }
-
-        .discount-badge {
-            font-size: 0.75rem;
-            background: #fff3e0;
-            color: #e65100;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
         /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.92);
             z-index: 1000;
             justify-content: center;
@@ -154,9 +156,7 @@
             cursor: pointer;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal img {
             max-width: 92%;
@@ -167,8 +167,7 @@
 
         .modal-close {
             position: fixed;
-            top: 1rem;
-            right: 1.5rem;
+            top: 1rem; right: 1.5rem;
             color: white;
             font-size: 2.5rem;
             cursor: pointer;
@@ -185,32 +184,17 @@
             margin-top: 2rem;
         }
 
-        footer a {
-            color: #0f3460;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
         @media (max-width: 640px) {
-            header h1 {
-                font-size: 1.7rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .product-image-container {
-                height: 260px;
-            }
+            header h1 { font-size: 1.7rem; }
+            .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .carousel { height: 260px; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>🏷️ Desapego — Tudo à Venda!</h1>
-        <p>Produtos em ótimo estado com até 35% de desconto do valor de novo</p>
+        <h1>🏷️ Desapego Rio do Sul</h1>
+        <p>Produtos em ótimo estado — Aproveite!</p>
     </header>
 
     <div class="container">
@@ -218,254 +202,311 @@
 
             <!-- 1. TV Panasonic Smart 32" -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/01-tv-panasonic-smart.jpeg" alt="TV Panasonic Smart 32 polegadas com Chromecast" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/01-tv-1.jpeg" alt="TV Panasonic Smart 32" onclick="openModal(this)">
+                        <img src="img/01-tv-2.jpeg" alt="TV Panasonic Smart 32" onclick="openModal(this)">
+                        <img src="img/01-tv-3.jpeg" alt="TV Panasonic Smart 32" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">TV Panasonic Smart 32" com Chromecast</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 550</span>
-                    </div>
+                    <div class="product-price">R$ 550</div>
                 </div>
             </div>
 
-            <!-- 2. Arara de Roupas -->
+            <!-- 2. Cabideiros -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/02-arara-roupas.jpeg" alt="Arara de Roupas Dupla Roxa com Rodízios" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/02-cabideiros-1.jpeg" alt="Cabideiros Duplos Roxos" onclick="openModal(this)">
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Cabideiros Duplos Roxos com Rodízios</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 250</span>
-                    </div>
+                    <div class="product-price">R$ 250</div>
                 </div>
             </div>
 
-            <!-- 3. Escrivaninha Gamer -->
+            <!-- 3. Escrivaninha Gamer + Luminária -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/03-escrivaninha-gamer.jpeg" alt="Escrivaninha Gamer Preta com Nichos" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/03-escrivaninha-1.jpeg" alt="Escrivaninha Gamer" onclick="openModal(this)">
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Escrivaninha Gamer Preta com Nichos + Luminária de Mesa</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 280</span>
-                        <span class="discount-badge">Mesa R$240 + Luminária R$40</span>
-                    </div>
+                    <div class="product-price">R$ 280</div>
                 </div>
             </div>
 
-            <!-- 4. Varal de Chão -->
+            <!-- 4. Varal -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/04-varal-chao.jpeg" alt="Varal de Chão Dobrável com Abas" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/04-varal-1.jpeg" alt="Varal de Chão" onclick="openModal(this)">
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Varal de Chão Dobrável com Abas (Estender Roupas)</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 75</span>
-                    </div>
+                    <div class="product-price">R$ 75</div>
                 </div>
             </div>
 
             <!-- 5. Geladeira Electrolux -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/05-geladeira-electrolux.jpeg" alt="Geladeira Electrolux Frost Free Duplex" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/05-geladeira-1.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                        <img src="img/05-geladeira-2.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                        <img src="img/05-geladeira-3.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Geladeira Electrolux Frost Free Duplex (Turbo Freezer)</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 1.400</span>
-                    </div>
+                    <div class="product-price">R$ 1.400</div>
                 </div>
             </div>
 
             <!-- 6. Balcão + Cooktop -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/06-balcao-cooktop-ref.jpeg" alt="Balcão de Cozinha MDF com Cooktop 4 Bocas" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge novo">Novo</span>
+                    <div class="carousel-track">
+                        <img src="img/06-balcao-1.jpeg" alt="Balcão + Cooktop" onclick="openModal(this)">
+                        <img src="img/06-balcao-2.jpeg" alt="Balcão + Cooktop" onclick="openModal(this)">
+                        <img src="img/06-balcao-3.jpeg" alt="Balcão + Cooktop" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Balcão de Cozinha MDF + Cooktop 4 Bocas (Novo na caixa)</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 600</span>
-                    </div>
+                    <div class="product-price">R$ 600</div>
                 </div>
             </div>
 
-            <!-- 7. Mesa de Jantar -->
+            <!-- 7. Mesa Cozinha -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/07-mesa-jantar.jpeg" alt="Mesa de Jantar MDF Cor Clara" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/07-mesa-1.jpeg" alt="Mesa de Cozinha" onclick="openModal(this)">
+                        <img src="img/07-mesa-2.jpeg" alt="Mesa de Cozinha" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Mesa de Cozinha MDF Cor Clara (4 lugares)</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 260</span>
-                    </div>
+                    <div class="product-price">R$ 260</div>
                 </div>
             </div>
 
-            <!-- 8. Travessas Cerâmica -->
+            <!-- 8. Travessas -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/08-travessas-ceramica.jpeg" alt="Kit 3 Travessas de Cerâmica Azul" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/08-travessas-1.jpeg" alt="Kit Travessas Cerâmica" onclick="openModal(this)">
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Kit 3 Travessas de Cerâmica Azul (P, M, G)</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 80</span>
-                    </div>
+                    <div class="product-price">R$ 80</div>
                 </div>
             </div>
 
-            <!-- 9. Micro-ondas Brastemp -->
+            <!-- 9. Micro-ondas -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/09-microondas-brastemp.jpeg" alt="Micro-ondas Brastemp Ative!" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/09-microondas-1.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                        <img src="img/09-microondas-2.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                        <img src="img/09-microondas-3.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Micro-ondas Brastemp Ative! 30L</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 160</span>
-                    </div>
+                    <div class="product-price">R$ 160</div>
                 </div>
             </div>
 
             <!-- 10. Grill Cadence -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/10-grill-cadence.jpeg" alt="Grill e Sanduicheira Cadence" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/10-grill-1.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
+                        <img src="img/10-grill-2.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Sanduicheira Cadence Inox</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 65</span>
-                    </div>
+                    <div class="product-price">R$ 65</div>
                 </div>
             </div>
 
             <!-- 11. Panela Mondial -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/11-panela-mondial.jpeg" alt="Panela Elétrica de Arroz Mondial Fast Rice 5" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/11-panela-1.jpeg" alt="Panela Elétrica Mondial" onclick="openModal(this)">
+                        <img src="img/11-panela-2.jpeg" alt="Panela Elétrica Mondial" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Panela Elétrica de Arroz Mondial Fast Rice 5</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 130</span>
-                    </div>
+                    <div class="product-price">R$ 130</div>
                 </div>
             </div>
 
-            <!-- 12. Air Fryer Mondial -->
+            <!-- 12. Air Fryer -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/12-airfryer-mondial.jpeg" alt="Air Fryer Mondial Family 4L" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/12-airfryer-1.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
+                        <img src="img/12-airfryer-2.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Air Fryer Mondial Family 4L</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 140</span>
-                    </div>
+                    <div class="product-price">R$ 140</div>
                 </div>
             </div>
 
-            <!-- 13. Aspirador Mondial -->
+            <!-- 13. Aspirador -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/13-aspirador-mondial.jpeg" alt="Aspirador de Pó Vertical Mondial 1000W" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/13-aspirador-1.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                        <img src="img/13-aspirador-2.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                        <img src="img/13-aspirador-3.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Aspirador de Pó Vertical Mondial 1000W</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 95</span>
-                    </div>
+                    <div class="product-price">R$ 95</div>
                 </div>
             </div>
 
-            <!-- 14. Lavadora Electrolux -->
+            <!-- 14. Lavadora -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/14-lavadora-electrolux.jpeg" alt="Lavadora de Roupas Electrolux Turbo Capacidade 12kg" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/14-lavadora-1.jpeg" alt="Lavadora Electrolux 12kg" onclick="openModal(this)">
+                        <img src="img/14-lavadora-2.jpeg" alt="Lavadora Electrolux 12kg" onclick="openModal(this)">
+                        <img src="img/14-lavadora-3.jpeg" alt="Lavadora Electrolux 12kg" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Lavadora Electrolux Turbo Capacidade 12kg</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 650</span>
-                    </div>
+                    <div class="product-price">R$ 650</div>
                 </div>
             </div>
 
-            <!-- 15. Ventilador Britânia -->
+            <!-- 15. Ventilador -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/15-ventilador-britania.jpeg" alt="Ventilador de Coluna Britânia 160W Turbo" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/15-ventilador-1.jpeg" alt="Ventilador Britânia" onclick="openModal(this)">
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Ventilador de Coluna Britânia Turbo 160W</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 110</span>
-                    </div>
+                    <div class="product-price">R$ 110</div>
                 </div>
             </div>
 
-            <!-- 16. Aquecedor Good&Go -->
+            <!-- 16. Aquecedor -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/16-aquecedor-goodgo.jpeg" alt="Aquecedor e Termoventilador Good and Go" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/16-aquecedor-1.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
+                        <img src="img/16-aquecedor-2.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Aquecedor / Termoventilador Good&Go</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 70</span>
-                    </div>
+                    <div class="product-price">R$ 70</div>
                 </div>
             </div>
 
-            <!-- 17. Frigobar Consul -->
+            <!-- 17. Frigobar -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/17-frigobar-consul.jpeg" alt="Frigobar Consul Compacto 120L" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/17-frigobar-1.jpeg" alt="Frigobar Consul" onclick="openModal(this)">
+                        <img src="img/17-frigobar-2.jpeg" alt="Frigobar Consul" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Frigobar Consul Compacto 120L</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 575</span>
-                    </div>
+                    <div class="product-price">R$ 575</div>
                 </div>
             </div>
 
             <!-- 18. Monitor LG -->
             <div class="product-card">
-                <div class="product-image-container">
-                    <img src="img/18-monitor-lg.jpeg" alt="Monitor LG Flatron W2043S 20 polegadas" class="product-image" onclick="openModal(this)">
+                <div class="carousel">
                     <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="img/18-monitor-1.jpeg" alt="Monitor LG Flatron" onclick="openModal(this)">
+                        <img src="img/18-monitor-2.jpeg" alt="Monitor LG Flatron" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
                 </div>
                 <div class="product-info">
                     <div class="product-name">Monitor LG Flatron W2043S 20" + Adaptador HDMI-VGA</div>
-                    <div class="price-container">
-                        <span class="product-price">R$ 120</span>
-                    </div>
+                    <div class="product-price">R$ 120</div>
                 </div>
             </div>
 
@@ -487,18 +528,35 @@
         💬
     </a>
 
-    <!-- Modal para visualizar imagem ampliada -->
+    <!-- Modal -->
     <div class="modal" id="imageModal" onclick="closeModal()">
         <span class="modal-close">&times;</span>
         <img id="modalImage" src="" alt="Imagem ampliada">
     </div>
 
     <script>
+        function slide(btn, direction) {
+            const carousel = btn.closest('.carousel');
+            const track = carousel.querySelector('.carousel-track');
+            const images = track.querySelectorAll('img');
+            const dots = carousel.querySelectorAll('.dot');
+            const total = images.length;
+
+            let current = Math.round(Math.abs(track.style.transform ? parseFloat(track.style.transform.replace('translateX(', '').replace('%)', '')) : 0) / 100);
+
+            current += direction;
+            if (current < 0) current = total - 1;
+            if (current >= total) current = 0;
+
+            track.style.transform = `translateX(-${current * 100}%)`;
+
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+        }
+
         function openModal(imgElement) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             modalImg.src = imgElement.src;
-            modalImg.alt = imgElement.alt;
             modal.classList.add('active');
         }
 
@@ -508,6 +566,24 @@
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
+        });
+
+        // Swipe touch para mobile
+        document.querySelectorAll('.carousel').forEach(carousel => {
+            let startX = 0;
+            const track = carousel.querySelector('.carousel-track');
+
+            carousel.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+            });
+
+            carousel.addEventListener('touchend', e => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    const btn = carousel.querySelector(diff > 0 ? '.carousel-btn.next' : '.carousel-btn.prev');
+                    if (btn) btn.click();
+                }
+            });
         });
     </script>
 </body>
