@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Publish Site
 
 on:
   push:
@@ -11,7 +11,10 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  publish:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
