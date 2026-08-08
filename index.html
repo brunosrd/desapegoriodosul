@@ -127,6 +127,42 @@
 
         .badge.novo { background: #43a047; }
 
+        .badge.vendido { background: #555; }
+
+        .sold-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .sold-overlay span {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 3px solid white;
+            padding: 6px 18px;
+            border-radius: 8px;
+            opacity: 0.95;
+        }
+
+        .product-card.vendido .product-price {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-card.vendido .product-name::after {
+            content: ' — VENDIDO';
+            color: #999;
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
         .product-info { padding: 1.4rem; }
 
         .product-name {
@@ -284,9 +320,10 @@
             </div>
 
             <!-- 4. Varal -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/04-varal-1.jpeg" alt="Varal de Chão" onclick="openModal(this)">
                     </div>
@@ -354,9 +391,10 @@
             </div>
 
             <!-- 8. Travessas -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/08-travessas-1.jpeg" alt="Kit Travessas Cerâmica" onclick="openModal(this)">
                     </div>
@@ -368,9 +406,10 @@
             </div>
 
             <!-- 9. Micro-ondas -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/09-microondas-1.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
                         <img src="img/09-microondas-2.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
@@ -387,9 +426,10 @@
             </div>
 
             <!-- 10. Grill Cadence -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/10-grill-1.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
                         <img src="img/10-grill-2.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
@@ -423,9 +463,10 @@
             </div>
 
             <!-- 12. Air Fryer -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/12-airfryer-1.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
                         <img src="img/12-airfryer-2.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
@@ -441,9 +482,10 @@
             </div>
 
             <!-- 13. Aspirador -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/13-aspirador-1.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
                         <img src="img/13-aspirador-2.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
@@ -493,9 +535,10 @@
             </div>
 
             <!-- 16. Aquecedor -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/16-aquecedor-1.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
                         <img src="img/16-aquecedor-2.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
@@ -547,9 +590,10 @@
             </div>
 
             <!-- 19. Caixa Térmica Bel 19L -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/19-caixa-termica-1.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
                         <img src="img/19-caixa-termica-2.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
@@ -579,9 +623,10 @@
             </div>
 
             <!-- 21. Liquidificador Britânia BLQ970 -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/21-liquidificador-1.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
                         <img src="img/21-liquidificador-2.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
@@ -616,9 +661,10 @@
             </div>
 
             <!-- 23. Ferro Black+Decker X6000 -->
-            <div class="product-card">
+            <div class="product-card vendido">
                 <div class="carousel">
-                    <span class="badge">Usado</span>
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
                     <div class="carousel-track">
                         <img src="img/23-ferro-1.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
                         <img src="img/23-ferro-2.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
