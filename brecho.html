@@ -173,6 +173,47 @@
 
         .badge.original { background: #2e7d32; }
 
+        .badge.vendido { background: #555; }
+
+        .sold-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .sold-overlay span {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 3px solid white;
+            padding: 6px 18px;
+            border-radius: 8px;
+            opacity: 0.95;
+        }
+
+        .product-card.vendido .product-price {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-card.vendido .product-name::after {
+            content: ' — VENDIDO';
+            color: #999;
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
+        .product-card.vendido .carousel-btn,
+        .product-card.vendido .carousel-dots {
+            display: none;
+        }
+
         .product-info { padding: 1.2rem; }
 
         .product-type {
@@ -577,8 +618,8 @@
             </div>
             <div class="product-info">
                 <div class="product-type">Camiseta Esportiva</div>
-                <div class="product-name">Hummel — Kit Camisetas Coloridas</div>
-                <div class="product-brand">Hummel / Magazord — Várias cores (azul, verde, vinho, preto, vermelho, amarelo, bege)</div>
+                <div class="product-name">Magazord — Kit Camisetas Coloridas</div>
+                <div class="product-brand">Magazord — Várias cores (azul, verde, vinho, preto, vermelho, amarelo, branco)</div>
                 <span class="product-size">Tam. M / G</span>
                 <div class="product-price">R$ 100</div>
             </div>
@@ -1388,7 +1429,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.09 (2).jpeg" alt="Kit Camiseta + Bermuda — Vottri Futevôlei" onclick="openModal(this)">
                 </div>
@@ -1404,7 +1445,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.09 (3).jpeg" alt="Kit Regata + Bermuda — Copa Camargo Futevôlei" onclick="openModal(this)">
                 </div>
@@ -1420,7 +1461,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.11 (2).jpeg" alt="Bermuda Futevôlei — Athleta Billabong FCC" onclick="openModal(this)">
                 </div>
@@ -1436,7 +1477,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.12.jpeg" alt="Bermuda Futevôlei — Athleta Billabong FCC" onclick="openModal(this)">
                 </div>
@@ -1452,7 +1493,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.12 (2).jpeg" alt="Camisa Manga Longa — Supermaster Moreira Esportes" onclick="openModal(this)">
                 </div>
@@ -1468,7 +1509,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.13 (1).jpeg" alt="Regata Futevôlei — Vale Norte Azul" onclick="openModal(this)">
                 </div>
@@ -1484,7 +1525,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.13 (2).jpeg" alt="Camiseta Futebol — Chapecoense Umbro Verde" onclick="openModal(this)">
                 </div>
@@ -1500,7 +1541,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.14 (1).jpeg" alt="Regata Futevôlei — 4ª Copa Vamooo Preta" onclick="openModal(this)">
                 </div>
@@ -1516,7 +1557,7 @@
         <div class="product-card vendido">
             <div class="carousel">
                 <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
+                <div class="sold-overlay"><span>Vendido</span></div>
                 <div class="carousel-track">
                     <img src="Brecho/WhatsApp Image 2026-08-19 at 11.40.14 (3).jpeg" alt="Kit Regata + Bermuda — Team Floripa Futevôlei" onclick="openModal(this)">
                 </div>
