@@ -24,10 +24,16 @@ jobs:
 
       - name: Prepare site files
         run: |
-          mkdir -p _site/img
+          mkdir -p _site/img _site/Brecho
+          # HTML pages
           cp index.html _site/
-          # Copy only properly named images (exclude WhatsApp originals and Zone.Identifier files)
+          cp brecho.html _site/
+          # Images in img/ (renamed ones only, not WhatsApp originals)
           find img/ -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/img/ \;
+          # Images in Brecho/ (all .jpeg)
+          find Brecho/ -maxdepth 1 -name '*.jpeg' ! -name '*:Zone.Identifier' -exec cp {} _site/Brecho/ \;
+          # Root images (Guitarra, amazon, bermuda)
+          find . -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/ \;
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
