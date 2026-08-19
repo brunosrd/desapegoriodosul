@@ -277,6 +277,63 @@
     <div class="container">
         <div class="products-grid">
 
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- ══ NÃO VENDIDOS (aparecem primeiro) ══════ -->
+            <!-- ═══════════════════════════════════════════ -->
+
+            <!-- 0. BRECHÓ — card de entrada -->
+            <div class="product-card" style="cursor:pointer;" onclick="window.location='brecho.html'">
+                <div class="carousel">
+                    <span class="badge novo">Brechó</span>
+                    <div class="carousel-track">
+                        <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.08.jpeg" alt="Brechó — Camisetas empilhadas" style="pointer-events:none;">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">👕 Brechó — Camisetas, Calças, Bermudas e mais!</div>
+                    <div class="price-row">
+                        <div class="product-price" style="font-size:1.2rem; color:#2e7d32;">R$ 18 – R$ 50</div>
+                    </div>
+                    <p style="margin-top:0.6rem; font-size:0.85rem; color:#555;">✅ Todos originais &nbsp;|&nbsp; Tam. M e G &nbsp;|&nbsp; <strong>Clique para ver todas as peças →</strong></p>
+                </div>
+            </div>
+
+            <!-- GUITARRA Memphis + Amplificador -->
+            <div class="product-card">
+                <div class="carousel">
+                    <span class="badge novo">Usado</span>
+                    <div class="carousel-track">
+                        <img src="Guitarra Menphis.jpeg" alt="Guitarra Memphis com Amplificador" onclick="openModal(this)">
+                        <img src="Guitarra.jpeg" alt="Guitarra Memphis — detalhe" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Guitarra + Capa Impermeável + Amplificador + Cabo</div>
+                    <div class="price-row"><div class="product-price">R$ 700</div></div>
+                </div>
+            </div>
+
+            <!-- Amazon Echo Dot 5ª Geração -->
+            <div class="product-card">
+                <div class="carousel">
+                    <span class="badge novo">Usado</span>
+                    <div class="carousel-track">
+                        <img src="amazon1.jpeg" alt="Amazon Echo Dot 5ª Geração — na caixa" onclick="openModal(this)">
+                        <img src="amazon.jpeg" alt="Amazon Echo Dot 5ª Geração — caixa fechada" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Amazon Echo Dot 5ª Geração com Alexa (com caixa e carregador)</div>
+                    <div class="price-row"><div class="product-price">R$ 350</div><div class="product-compare"><a href="https://www.amazon.com.br/echo-dot-5-geracao/dp/B09B8V1LZ3" target="_blank">Echo Dot</a></div></div>
+                </div>
+            </div>
+
             <!-- 1. TV Panasonic Smart 32" -->
             <div class="product-card">
                 <div class="carousel">
@@ -324,40 +381,6 @@
                 </div>
             </div>
 
-            <!-- 4. Varal -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/04-varal-1.jpeg" alt="Varal de Chão" onclick="openModal(this)">
-                    </div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Varal de Chão Dobrável com Abas (Estender Roupas)</div>
-                    <div class="price-row"><div class="product-price">R$ 75</div><div class="product-compare"><a href="https://www.carrefour.com.br/varal-de-chao-com-abas-maxi-006010-mor-mp935977705/p" target="_blank">Varal</a></div></div>
-                </div>
-            </div>
-
-            <!-- 5. Geladeira Electrolux -->
-            <div class="product-card">
-                <div class="carousel">
-                    <span class="badge">Usado</span>
-                    <div class="carousel-track">
-                        <img src="img/05-geladeira-1.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
-                        <img src="img/05-geladeira-2.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
-                        <img src="img/05-geladeira-3.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Geladeira Electrolux Frost Free Duplex (Turbo Freezer)</div>
-                    <div class="price-row"><div class="product-price">R$ 1.400</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/geladeira-electrolux-frost-free-inverter-efficient-415l-autosense-duplex-branca-if46/p/MLB46530954" target="_blank">Geladeira</a></div></div>
-                </div>
-            </div>
-
             <!-- 6. Balcão + Cooktop -->
             <div class="product-card">
                 <div class="carousel">
@@ -395,60 +418,6 @@
                 </div>
             </div>
 
-            <!-- 8. Travessas -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/08-travessas-1.jpeg" alt="Kit Travessas Cerâmica" onclick="openModal(this)">
-                    </div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Kit 3 Travessas de Cerâmica Azul (P, M, G)</div>
-                    <div class="price-row"><div class="product-price">R$ 80</div><div class="product-compare"><a href="https://www.amazon.com.br/Travessas-Refrat%C3%A1rias-Retangular-Micro-ondas-FCS/dp/B0G514W7MX" target="_blank">Travessas</a></div></div>
-                </div>
-            </div>
-
-            <!-- 9. Micro-ondas -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/09-microondas-1.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
-                        <img src="img/09-microondas-2.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
-                        <img src="img/09-microondas-3.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Micro-ondas Brastemp Ative! 30L</div>
-                    <div class="price-row"><div class="product-price">R$ 160</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/micro-ondas-brastemp-32l-branco-com-menu-gourmet-bms46ab/p/MLB19119107" target="_blank">Micro-ondas</a></div></div>
-                </div>
-            </div>
-
-            <!-- 10. Grill Cadence -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/10-grill-1.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
-                        <img src="img/10-grill-2.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Sanduicheira Cadence Inox</div>
-                    <div class="price-row"><div class="product-price">R$ 65</div><div class="product-compare"><a href="https://www.schumann.com.br/grill-cadence-chapa-firme-grl621-1600w-preto-e-inox-p1209930" target="_blank">Grill</a></div></div>
-                </div>
-            </div>
-
             <!-- 11. Panela Mondial -->
             <div class="product-card">
                 <div class="carousel">
@@ -464,45 +433,6 @@
                 <div class="product-info">
                     <div class="product-name">Panela Elétrica de Arroz Mondial Fast Rice 5</div>
                     <div class="price-row"><div class="product-price">R$ 130</div><div class="product-compare"><a href="https://www.pontofrio.com.br/panela-eletrica-mondial-fast-rice-5-premium-npe-08-5x/p/1560098941" target="_blank">Panela</a></div></div>
-                </div>
-            </div>
-
-            <!-- 12. Air Fryer -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/12-airfryer-1.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
-                        <img src="img/12-airfryer-2.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Air Fryer Mondial Family 4L</div>
-                    <div class="price-row"><div class="product-price">R$ 140</div><div class="product-compare"><a href="https://www.pontofrio.com.br/fritadeira-eletrica-mondial-air-fryer-4-litros-afn-40/p/1560593162" target="_blank">Air Fryer</a></div></div>
-                </div>
-            </div>
-
-            <!-- 13. Aspirador -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/13-aspirador-1.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
-                        <img src="img/13-aspirador-2.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
-                        <img src="img/13-aspirador-3.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Aspirador de Pó Vertical Mondial 1000W</div>
-                    <div class="price-row"><div class="product-price">R$ 95</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/aspirador-de-po-turbo-cycle-mondial-1100w-ap-36/p/MLB14214629" target="_blank">Aspirador</a></div></div>
                 </div>
             </div>
 
@@ -536,25 +466,6 @@
                 <div class="product-info">
                     <div class="product-name">Ventilador de Coluna Britânia Turbo 160W</div>
                     <div class="price-row"><div class="product-price">R$ 110</div><div class="product-compare"><a href="https://www.britania.com.br/ventilador-bvt450-127v-033011181/p" target="_blank">Ventilador</a></div></div>
-                </div>
-            </div>
-
-            <!-- 16. Aquecedor -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/16-aquecedor-1.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
-                        <img src="img/16-aquecedor-2.jpeg" alt="Aquecedor Good&Go" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Aquecedor / Termoventilador Good&Go</div>
-                    <div class="price-row"><div class="product-price">R$ 70</div><div class="product-compare"><a href="https://www.buscape.com.br/aquecedor-ambiente-ar/aquecedor-eletrico-termoventilador-ventisol-a1" target="_blank">Aquecedor</a></div></div>
                 </div>
             </div>
 
@@ -594,25 +505,6 @@
                 </div>
             </div>
 
-            <!-- 19. Caixa Térmica Bel 19L -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/19-caixa-termica-1.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
-                        <img src="img/19-caixa-termica-2.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Caixa Térmica Bel 19 Litros com Suporte para Copos</div>
-                    <div class="price-row"><div class="product-price">R$ 40</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/caixa-termica-cooler-19l-com-porta-copos-verde-musgo-bel/p/MLB45553974" target="_blank">Caixa Térmica</a></div></div>
-                </div>
-            </div>
-
             <!-- 20. Kit Lixeiras -->
             <div class="product-card">
                 <div class="carousel">
@@ -624,25 +516,6 @@
                 <div class="product-info">
                     <div class="product-name">Kit 3 Lixeiras (Inox Pedal + Telada Preta + Balcão Cozinha)</div>
                     <div class="price-row"><div class="product-price">R$ 60</div><div class="product-compare"><a href="https://www.amazon.com.br/Lixeira-Pedal-Cesto-Interno-Cozinha/dp/B0H5CYQBP5" target="_blank">Inox</a> <a href="https://www.mercadolivre.com.br/10-lixeira-metal-aramado-cesto-lixo-escritorio-quarto-125-l/up/MLBU1463931919" target="_blank">Telada</a> <a href="https://www.mercadolivre.com.br/lixeira-de-cozinha-25l-lixeira-de-pia-cesto-de-lixo-trium-cor-bege/p/MLB37885473" target="_blank">Balcão</a></div></div>
-                </div>
-            </div>
-
-            <!-- 21. Liquidificador Britânia BLQ970 -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/21-liquidificador-1.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
-                        <img src="img/21-liquidificador-2.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Liquidificador Britânia BLQ970 Turbo 900W 2,6L</div>
-                    <div class="price-row"><div class="product-price">R$ 90</div><div class="product-compare"><a href="https://www.britania.com.br/liquidificador-blq970p-turbo-900w/p" target="_blank">Liquidificador</a></div></div>
                 </div>
             </div>
 
@@ -665,26 +538,6 @@
                 </div>
             </div>
 
-            <!-- 23. Ferro Black+Decker X6000 -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/23-ferro-1.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
-                        <img src="img/23-ferro-2.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
-                        <img src="img/23-ferro-3.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Ferro a Vapor Black+Decker Multi Steam X6000</div>
-                    <div class="price-row"><div class="product-price">R$ 55</div><div class="product-compare"><a href="https://www.magazineluiza.com.br/ferro-de-passar-roupa-a-vapor-e-a-seco-black-decker-fx2500-branco-e-roxo/p/021934700/ep/ferr/" target="_blank">Ferro</a></div></div>
-                </div>
-            </div>
-
             <!-- 24. Repetidor Wi-Fi Knup KP-3005 -->
             <div class="product-card">
                 <div class="carousel">
@@ -700,25 +553,6 @@
                 <div class="product-info">
                     <div class="product-name">Repetidor Wi-Fi Knup KP-3005 com Porta LAN</div>
                     <div class="price-row"><div class="product-price">R$ 35</div><div class="product-compare"><a href="https://www.amazon.com.br/Repetidor-Sinal-Wireless-300Mbps-2-4GHz/dp/B0H359SLNL" target="_blank">Repetidor</a></div></div>
-                </div>
-            </div>
-
-            <!-- 25. JBL Clip 5 Vermelha -->
-            <div class="product-card">
-                <div class="carousel">
-                    <span class="badge">Usado</span>
-                    <div class="carousel-track">
-                        <img src="img/25-jbl-1.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
-                        <img src="img/25-jbl-2.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
-                        <img src="img/25-jbl-3.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Caixa de Som JBL Clip 5 Bluetooth Vermelha (com caixa)</div>
-                    <div class="price-row"><div class="product-price">R$ 120</div><div class="product-compare"><a href="https://www.jbl.com.br/caixas-de-som-portateis/CLIP-5.html" target="_blank">JBL Clip 5</a></div></div>
                 </div>
             </div>
 
@@ -789,6 +623,235 @@
                 <div class="product-info">
                     <div class="product-name">Cadeira de Escritório Giratória Tela Mesh Preta com Braços</div>
                     <div class="price-row"><div class="product-price">R$ 80</div><div class="product-compare"><a href="https://www.amazon.com.br/gp/aw/d/B0BCXBC2W4/" target="_blank">Cadeira</a></div></div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- ══ VENDIDOS ══════════════════════════════ -->
+            <!-- ═══════════════════════════════════════════ -->
+
+            <!-- 4. Varal -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/04-varal-1.jpeg" alt="Varal de Chão" onclick="openModal(this)">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Varal de Chão Dobrável com Abas (Estender Roupas)</div>
+                    <div class="price-row"><div class="product-price">R$ 75</div><div class="product-compare"><a href="https://www.carrefour.com.br/varal-de-chao-com-abas-maxi-006010-mor-mp935977705/p" target="_blank">Varal</a></div></div>
+                </div>
+            </div>
+
+            <!-- 5. Geladeira Electrolux -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/05-geladeira-1.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                        <img src="img/05-geladeira-2.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                        <img src="img/05-geladeira-3.jpeg" alt="Geladeira Electrolux" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Geladeira Electrolux Frost Free Duplex (Turbo Freezer)</div>
+                    <div class="price-row"><div class="product-price">R$ 1.400</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/geladeira-electrolux-frost-free-inverter-efficient-415l-autosense-duplex-branca-if46/p/MLB46530954" target="_blank">Geladeira</a></div></div>
+                </div>
+            </div>
+
+            <!-- 8. Travessas -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/08-travessas-1.jpeg" alt="Kit Travessas Cerâmica" onclick="openModal(this)">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Kit 3 Travessas de Cerâmica Azul (P, M, G)</div>
+                    <div class="price-row"><div class="product-price">R$ 80</div><div class="product-compare"><a href="https://www.amazon.com.br/Travessas-Refrat%C3%A1rias-Retangular-Micro-ondas-FCS/dp/B0G514W7MX" target="_blank">Travessas</a></div></div>
+                </div>
+            </div>
+
+            <!-- 9. Micro-ondas -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/09-microondas-1.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                        <img src="img/09-microondas-2.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                        <img src="img/09-microondas-3.jpeg" alt="Micro-ondas Brastemp" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Micro-ondas Brastemp Ative! 30L</div>
+                    <div class="price-row"><div class="product-price">R$ 160</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/micro-ondas-brastemp-32l-branco-com-menu-gourmet-bms46ab/p/MLB19119107" target="_blank">Micro-ondas</a></div></div>
+                </div>
+            </div>
+
+            <!-- 10. Grill Cadence -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/10-grill-1.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
+                        <img src="img/10-grill-2.jpeg" alt="Sanduicheira Cadence" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Sanduicheira Cadence Inox</div>
+                    <div class="price-row"><div class="product-price">R$ 65</div><div class="product-compare"><a href="https://www.schumann.com.br/grill-cadence-chapa-firme-grl621-1600w-preto-e-inox-p1209930" target="_blank">Grill</a></div></div>
+                </div>
+            </div>
+
+            <!-- 12. Air Fryer -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/12-airfryer-1.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
+                        <img src="img/12-airfryer-2.jpeg" alt="Air Fryer Mondial" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Air Fryer Mondial Family 4L</div>
+                    <div class="price-row"><div class="product-price">R$ 140</div><div class="product-compare"><a href="https://www.pontofrio.com.br/fritadeira-eletrica-mondial-air-fryer-4-litros-afn-40/p/1560593162" target="_blank">Air Fryer</a></div></div>
+                </div>
+            </div>
+
+            <!-- 13. Aspirador -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/13-aspirador-1.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                        <img src="img/13-aspirador-2.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                        <img src="img/13-aspirador-3.jpeg" alt="Aspirador Mondial" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Aspirador de Pó Vertical Mondial 1000W</div>
+                    <div class="price-row"><div class="product-price">R$ 95</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/aspirador-de-po-turbo-cycle-mondial-1100w-ap-36/p/MLB14214629" target="_blank">Aspirador</a></div></div>
+                </div>
+            </div>
+
+            <!-- 16. Aquecedor -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/16-aquecedor-1.jpeg" alt="Aquecedor Good&amp;Go" onclick="openModal(this)">
+                        <img src="img/16-aquecedor-2.jpeg" alt="Aquecedor Good&amp;Go" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Aquecedor / Termoventilador Good&amp;Go</div>
+                    <div class="price-row"><div class="product-price">R$ 70</div><div class="product-compare"><a href="https://www.buscape.com.br/aquecedor-ambiente-ar/aquecedor-eletrico-termoventilador-ventisol-a1" target="_blank">Aquecedor</a></div></div>
+                </div>
+            </div>
+
+            <!-- 19. Caixa Térmica Bel 19L -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/19-caixa-termica-1.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
+                        <img src="img/19-caixa-termica-2.jpeg" alt="Caixa Térmica Bel 19L" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Caixa Térmica Bel 19 Litros com Suporte para Copos</div>
+                    <div class="price-row"><div class="product-price">R$ 40</div><div class="product-compare"><a href="https://www.mercadolivre.com.br/caixa-termica-cooler-19l-com-porta-copos-verde-musgo-bel/p/MLB45553974" target="_blank">Caixa Térmica</a></div></div>
+                </div>
+            </div>
+
+            <!-- 21. Liquidificador Britânia BLQ970 -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/21-liquidificador-1.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
+                        <img src="img/21-liquidificador-2.jpeg" alt="Liquidificador Britânia BLQ970" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Liquidificador Britânia BLQ970 Turbo 900W 2,6L</div>
+                    <div class="price-row"><div class="product-price">R$ 90</div><div class="product-compare"><a href="https://www.britania.com.br/liquidificador-blq970p-turbo-900w/p" target="_blank">Liquidificador</a></div></div>
+                </div>
+            </div>
+
+            <!-- 23. Ferro Black+Decker X6000 -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/23-ferro-1.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
+                        <img src="img/23-ferro-2.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
+                        <img src="img/23-ferro-3.jpeg" alt="Ferro Black+Decker X6000" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Ferro a Vapor Black+Decker Multi Steam X6000</div>
+                    <div class="price-row"><div class="product-price">R$ 55</div><div class="product-compare"><a href="https://www.magazineluiza.com.br/ferro-de-passar-roupa-a-vapor-e-a-seco-black-decker-fx2500-branco-e-roxo/p/021934700/ep/ferr/" target="_blank">Ferro</a></div></div>
+                </div>
+            </div>
+
+            <!-- 25. JBL Clip 5 Vermelha -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/25-jbl-1.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
+                        <img src="img/25-jbl-2.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
+                        <img src="img/25-jbl-3.jpeg" alt="JBL Clip 5 Vermelha" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Caixa de Som JBL Clip 5 Bluetooth Vermelha (com caixa)</div>
+                    <div class="price-row"><div class="product-price">R$ 120</div><div class="product-compare"><a href="https://www.jbl.com.br/caixas-de-som-portateis/CLIP-5.html" target="_blank">JBL Clip 5</a></div></div>
                 </div>
             </div>
 

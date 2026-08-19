@@ -1,4 +1,14 @@
-WhatsApp Image*
-*.jpeg:Zone.Identifier
+# Imagens originais WhatsApp na raiz (não usadas pelo site)
+/WhatsApp Image*
+
+# Imagens WhatsApp em img/ (foram renomeadas, originais não são usadas)
+/img/WhatsApp Image*
+
+# Guitarras na raiz (usadas pelo site, mas vão via Guitarra*.jpeg)
+# — Guitarra.jpeg e Guitarra Menphis.jpeg SÃO referenciadas no index.html
+
+# Metadados Zone.Identifier do Windows/WSL
 *:Zone.Identifier
+
+# Build
 _site/

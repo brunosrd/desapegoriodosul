@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brechó — Desapego Rio do Sul</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-bottom: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        header h1 { font-size: 2.4rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        header p { font-size: 1.1rem; opacity: 0.85; font-weight: 300; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: white; }
+
+        .highlight-banner {
+            background: linear-gradient(135deg, #2e7d32, #388e3c);
+            color: white;
+            text-align: center;
+            padding: 1.2rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .highlight-banner .tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+        }
+
+        .highlight-banner .tag {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #0f3460;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: #f8f8f8;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-track img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transition: background 0.2s;
+        }
+
+        .carousel-dots .dot.active { background: white; }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #e53935;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .badge.original { background: #2e7d32; }
+
+        .product-info { padding: 1.2rem; }
+
+        .product-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #1a1a2e;
+            line-height: 1.4;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-size {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #1565c0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1b5e20;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal img {
+            max-width: 92%;
+            max-height: 92%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 1rem; right: 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            line-height: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.7rem; }
+            .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .carousel { height: 260px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="back-link">← Voltar para o Desapego</a>
+    <h1>👕 Brechó Rio do Sul</h1>
+    <p>Peças originais em ótimo estado — preços acessíveis!</p>
+</header>
+
+<div class="highlight-banner">
+    ✅ Todos os produtos são <strong>100% ORIGINAIS</strong> &nbsp;|&nbsp; Tamanhos <strong>M e G</strong>
+    <div class="tags">
+        <span class="tag">💰 A partir de R$ 18</span>
+        <span class="tag">💰 Até R$ 50</span>
+        <span class="tag">📦 Retirada em Rio do Sul</span>
+        <span class="tag">📱 Combinar via WhatsApp</span>
+    </div>
+</div>
+
+<div class="container">
+    <div class="products-grid">
+
+        <!-- 1. Camiseta Love You to the Moon and Back -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.26.jpeg" alt="Camiseta Love You to the Moon Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.26 (1).jpeg" alt="Camiseta Love You to the Moon Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Love You to the Moon and Back</div>
+                <div class="product-brand">Estampa frente e verso — Preta</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 2. Camiseta South to South Farol -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.27.jpeg" alt="Camiseta South to South Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.29.jpeg" alt="Camiseta South to South Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">South to South — Estampa Farol</div>
+                <div class="product-brand">South to South Premium — Preta</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 3. Camiseta Hurley California Republic -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.33.jpeg" alt="Camiseta Hurley California Republic Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.34.jpeg" alt="Camiseta Hurley California Republic Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Hurley — California Republic</div>
+                <div class="product-brand">Hurley — Preta</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 4. Camiseta Hang Loose / Shaka -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.37.jpeg" alt="Camiseta Hang Loose Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.38.jpeg" alt="Camiseta Hang Loose Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Hang Loose — Logo Shaka</div>
+                <div class="product-brand">Hang Loose — Preta</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 5. Camiseta Blunt Corporation More Than Machines -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.39.jpeg" alt="Camiseta Blunt Corporation Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.40.jpeg" alt="Camiseta Blunt Corporation Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Blunt Corporation — More Than Machines</div>
+                <div class="product-brand">Blunt — Preta</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 6. Camiseta South to South Planeta -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.41.jpeg" alt="Camiseta South to South Planeta Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.42.jpeg" alt="Camiseta South to South Planeta Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">South to South — Estampa Planeta</div>
+                <div class="product-brand">South to South — Preta</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 7. Camiseta Astroworld Travis Scott -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.42 (1).jpeg" alt="Camiseta Astroworld Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.43.jpeg" alt="Camiseta Astroworld Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Astroworld — Travis Scott</div>
+                <div class="product-brand">Astroworld — Preta</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 8. Camiseta Hurley Since 99 -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.44.jpeg" alt="Camiseta Hurley Since 99 Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.45.jpeg" alt="Camiseta Hurley Since 99 Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Hurley — Since Ninety Nine</div>
+                <div class="product-brand">Hurley — Preta</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 9. Camiseta Distinto azul marinho -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.46.jpeg" alt="Camiseta Distinto Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.46 (1).jpeg" alt="Camiseta Distinto Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Distinto — High Quality Goods</div>
+                <div class="product-brand">Distinto.com — Azul Marinho</div>
+                <span class="product-size">Tam. M</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 10. Camiseta Vans Classic cinza -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.47.jpeg" alt="Camiseta Vans Classic Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.48.jpeg" alt="Camiseta Vans Classic Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Vans — Classic Logo</div>
+                <div class="product-brand">Vans — Cinza Mescla</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 11. Camiseta Hurley Floripa cinza -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.49.jpeg" alt="Camiseta Hurley Floripa Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.50.jpeg" alt="Camiseta Hurley Floripa Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Hurley — Floripa</div>
+                <div class="product-brand">Hurley — Cinza</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 12. Camiseta Rip Curl Quality Goods bege -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.50 (1).jpeg" alt="Camiseta Rip Curl Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.51.jpeg" alt="Camiseta Rip Curl Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Rip Curl — Quality Goods Since 1969</div>
+                <div class="product-brand">Rip Curl — Bege</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 13. Camiseta Thrasher x Independent vermelha -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.51 (1).jpeg" alt="Camiseta Thrasher Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.52.jpeg" alt="Camiseta Thrasher Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Thrasher x Independent — Time to Grind</div>
+                <div class="product-brand">Thrasher / Independent Truck Co. — Vermelha</div>
+                <span class="product-size">Tam. M</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 14. Camiseta Overcome verde -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.53.jpeg" alt="Camiseta Overcome Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.57.53 (1).jpeg" alt="Camiseta Overcome Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta</div>
+                <div class="product-name">Overcome — OVCM TDMK</div>
+                <div class="product-brand">Overcome — Verde</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 15. Kit Camisetas Hummel coloridas -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.06 (2).jpeg" alt="Kit Camisetas Hummel Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.07.jpeg" alt="Kit Camisetas Hummel Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camiseta Esportiva</div>
+                <div class="product-name">Hummel — Kit Camisetas Coloridas</div>
+                <div class="product-brand">Hummel / Magazord — Várias cores (azul, verde, vinho, preto, vermelho, amarelo, bege)</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 18 cada</div>
+            </div>
+        </div>
+
+        <!-- 16. Moletom Tommy Hilfiger azul -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.09.jpeg" alt="Moletom Tommy Hilfiger Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.09 (1).jpeg" alt="Moletom Tommy Hilfiger Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Moletom</div>
+                <div class="product-name">Tommy Hilfiger — Tricot Manga Longa</div>
+                <div class="product-brand">Tommy Hilfiger — Azul Claro</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 50</div>
+            </div>
+        </div>
+
+        <!-- 17. Moletom Adidas preto -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.11 (1).jpeg" alt="Moletom Adidas Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.12.jpeg" alt="Moletom Adidas Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Moletom</div>
+                <div class="product-name">Adidas — Logo Grande</div>
+                <div class="product-brand">Adidas — Preto</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 50</div>
+            </div>
+        </div>
+
+        <!-- 18. Jaqueta Supermaster Futevôlei -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.05 (1).jpeg" alt="Jaqueta Supermaster Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.05 (2).jpeg" alt="Jaqueta Supermaster Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Jaqueta</div>
+                <div class="product-name">Supermaster — Catarinense de Futevôlei</div>
+                <div class="product-brand">Supermaster — Azul/Preto degradê</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 40</div>
+            </div>
+        </div>
+
+        <!-- 19. Blazer/Paletó Preto M&I -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.12 (1).jpeg" alt="Blazer Preto Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.13.jpeg" alt="Blazer Preto Detalhe" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Blazer / Paletó</div>
+                <div class="product-name">Blazer Social Preto</div>
+                <div class="product-brand">M&I — Preto com forro</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 45</div>
+            </div>
+        </div>
+
+        <!-- 20. Camisa Individual azul manga longa -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.13 (1).jpeg" alt="Camisa Individual Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.14.jpeg" alt="Camisa Individual Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camisa</div>
+                <div class="product-name">Individual — Slim Fit Manga Longa</div>
+                <div class="product-brand">Individual — Azul Xadrez Fino</div>
+                <span class="product-size">Tam. 3 (G)</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 21. Camisa Tevah Concept preta -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.14 (1).jpeg" alt="Camisa Tevah Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.14 (2).jpeg" alt="Camisa Tevah Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camisa</div>
+                <div class="product-name">Tevah Concept — Easy Iron Manga Longa</div>
+                <div class="product-brand">Tevah Concept — Preta</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 22. Camisa Colcci azul poá -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.15.jpeg" alt="Camisa Colcci Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.15 (1).jpeg" alt="Camisa Colcci Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camisa</div>
+                <div class="product-name">Colcci — Manga Longa Poá</div>
+                <div class="product-brand">Colcci — Azul Marinho com Bolinhas</div>
+                <span class="product-size">Tam. M</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 23. Camisa Reserva xadrez -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.16.jpeg" alt="Camisa Reserva Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.16 (1).jpeg" alt="Camisa Reserva Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Camisa</div>
+                <div class="product-name">Reserva — Manga Longa Xadrez</div>
+                <div class="product-brand">Reserva — Branco/Azul Xadrez</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 24. Kit Gravatas -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.16 (2).jpeg" alt="Kit Gravatas Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.17.jpeg" alt="Kit Gravatas Detalhe" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Gravata</div>
+                <div class="product-name">Kit 3 Gravatas</div>
+                <div class="product-brand">Cinza textura, Preta listrada, Azul royal</div>
+                <span class="product-size">Tamanho único</span>
+                <div class="product-price">R$ 20 o kit</div>
+            </div>
+        </div>
+
+        <!-- 25. Calça Jeans Beagle azul -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.02.jpeg" alt="Calça Jeans Beagle Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.02 (1).jpeg" alt="Calça Jeans Beagle Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Calça</div>
+                <div class="product-name">Calça Jeans Azul</div>
+                <div class="product-brand">Beagle Sensitive Comfort — N° 40</div>
+                <span class="product-size">Tam. 40</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 26. Calça preta Inex -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.02 (2).jpeg" alt="Calça Preta Inex Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.05.jpeg" alt="Calça Preta Inex Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Calça</div>
+                <div class="product-name">Calça Social Preta</div>
+                <div class="product-brand">Inex — N° 42</div>
+                <span class="product-size">Tam. 42</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 27. Calça Ellus bege -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.10.jpeg" alt="Calça Ellus Bege Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.11.jpeg" alt="Calça Ellus Bege Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Calça</div>
+                <div class="product-name">Calça Sarja Bege</div>
+                <div class="product-brand">Ellus Premium Denim — N° 44/36</div>
+                <span class="product-size">Tam. 44</span>
+                <div class="product-price">R$ 40</div>
+            </div>
+        </div>
+
+        <!-- 28. Bermuda Jean Vernier floral rosa -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.17 (1).jpeg" alt="Bermuda Jean Vernier Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.58.17 (2).jpeg" alt="Bermuda Jean Vernier Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda — Estampa Floral Rosa</div>
+                <div class="product-brand">Jean Vernier — Tamanho L</div>
+                <span class="product-size">Tam. L (G)</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 29. Bermuda Wave Hunter azul/roxo -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 12.59.42.jpeg" alt="Bermuda Wave Hunter Azul Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.00.jpeg" alt="Bermuda Wave Hunter Azul Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda Surf — Azul/Roxo Degradê</div>
+                <div class="product-brand">Wave Hunter Surfing — N° 38</div>
+                <span class="product-size">Tam. 38</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 30. Bermuda Wave Hunter marrom geométrico -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.00 (1).jpeg" alt="Bermuda Wave Hunter Marrom Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.01.jpeg" alt="Bermuda Wave Hunter Marrom Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda Surf — Estampa Geométrica Marrom</div>
+                <div class="product-brand">Wave Hunter Surfing — N° 40</div>
+                <span class="product-size">Tam. 40</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 31. Bermuda Polo Ralph Lauren branca -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.01 (1).jpeg" alt="Bermuda Polo Ralph Lauren Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.02.jpeg" alt="Bermuda Polo Ralph Lauren Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda — Branca</div>
+                <div class="product-brand">Polo Ralph Lauren — LIG</div>
+                <span class="product-size">Tam. G</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 32. Bermuda Hurley azul/preto -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.02 (1).jpeg" alt="Bermuda Hurley Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.02 (2).jpeg" alt="Bermuda Hurley Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda Hurley — Azul/Preto</div>
+                <div class="product-brand">Hurley — N° 34</div>
+                <span class="product-size">Tam. 34</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 33. Bermuda Vida Marinha azul listrada -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.03.jpeg" alt="Bermuda Vida Marinha Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.03 (1).jpeg" alt="Bermuda Vida Marinha Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda — Listrada Azul</div>
+                <div class="product-brand">Vida Marinha</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 34. Bermuda Reserva preta -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.04.jpeg" alt="Bermuda Reserva Preta Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.04 (1).jpeg" alt="Bermuda Reserva Preta Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda Preta</div>
+                <div class="product-brand">Reserva — Logo bordado</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+        <!-- 35. Short Rovitgx bege -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.04 (2).jpeg" alt="Short Rovitgx Bege Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.05.jpeg" alt="Short Rovitgx Bege Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda Classic Short — Bege</div>
+                <div class="product-brand">Rovitgx Men — N° 44</div>
+                <span class="product-size">Tam. 44</span>
+                <div class="product-price">R$ 25</div>
+            </div>
+        </div>
+
+        <!-- 36. Calça Braend cinza -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.05 (1).jpeg" alt="Calça Braend Cinza Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.05 (2).jpeg" alt="Calça Braend Cinza Etiqueta" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Calça</div>
+                <div class="product-name">Calça Sarja Cinza</div>
+                <div class="product-brand">Braend 1963 — N° 38</div>
+                <span class="product-size">Tam. 38</span>
+                <div class="product-price">R$ 35</div>
+            </div>
+        </div>
+
+        <!-- 37. Bermuda PGA Tour preta -->
+        <div class="product-card">
+            <div class="carousel">
+                <span class="badge original">Original</span>
+                <div class="carousel-track">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.06.jpeg" alt="Bermuda PGA Tour Frente" onclick="openModal(this)">
+                    <img src="Brecho/WhatsApp Image 2026-08-12 at 13.00.06 (1).jpeg" alt="Bermuda PGA Tour Verso" onclick="openModal(this)">
+                </div>
+                <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+            </div>
+            <div class="product-info">
+                <div class="product-type">Bermuda</div>
+                <div class="product-name">Bermuda PGA Tour — Geométrica Preta</div>
+                <div class="product-brand">PGA Tour — Preto</div>
+                <span class="product-size">Tam. M / G</span>
+                <div class="product-price">R$ 30</div>
+            </div>
+        </div>
+
+    </div><!-- fim products-grid -->
+</div><!-- fim container -->
+
+<footer>
+    <p><strong>Bruno Ribeiro</strong></p>
+    <p style="margin-top: 0.5rem;">
+        <a href="https://wa.me/5547988038778?text=Ol%C3%A1%20Bruno%2C%20vi%20o%20brech%C3%B3%20e%20tenho%20interesse%20em%20uma%20pe%C3%A7a!" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:#25d366; color:white; padding:12px 24px; border-radius:30px; text-decoration:none; font-weight:600; font-size:1rem;">
+            📱 (47) 98803-8778 — Chamar no WhatsApp
+        </a>
+    </p>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: #999;">Rio do Sul - SC</p>
+</footer>
+
+<a href="https://wa.me/5547988038778?text=Ol%C3%A1%20Bruno%2C%20vi%20o%20brech%C3%B3%20e%20tenho%20interesse%20em%20uma%20pe%C3%A7a!" target="_blank" style="position:fixed; bottom:20px; right:20px; background:#25d366; color:white; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2rem; box-shadow:0 4px 12px rgba(0,0,0,0.3); z-index:999; text-decoration:none;" aria-label="Chamar no WhatsApp">
+    💬
+</a>
+
+<div class="modal" id="imageModal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImage" src="" alt="Imagem ampliada">
+</div>
+
+<script>
+    function slide(btn, direction) {
+        const carousel = btn.closest('.carousel');
+        const track = carousel.querySelector('.carousel-track');
+        const images = track.querySelectorAll('img');
+        const dots = carousel.querySelectorAll('.dot');
+        const total = images.length;
+        let current = Math.round(Math.abs(track.style.transform ? parseFloat(track.style.transform.replace('translateX(','').replace('%)','')) : 0) / 100);
+        current += direction;
+        if (current < 0) current = total - 1;
+        if (current >= total) current = 0;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    }
+
+    function openModal(imgElement) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modalImg.src = imgElement.src;
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        let startX = 0;
+        const track = carousel.querySelector('.carousel-track');
+        carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+        carousel.addEventListener('touchend', e => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                const btn = carousel.querySelector(diff > 0 ? '.carousel-btn.next' : '.carousel-btn.prev');
+                if (btn) btn.click();
+            }
+        });
+    });
+</script>
+</body>
+</html>
