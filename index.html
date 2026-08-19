@@ -266,12 +266,32 @@
             .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .carousel { height: 260px; }
         }
+
+        /* Fade-in ao scroll */
+        .product-card {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .product-card {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>🏷️ Desapego Rio do Sul</h1>
-        <p>Produtos em ótimo estado — Aproveite!</p>
+        <h1>🏷️ Desapego do Bruno em Rio do Sul</h1>
+        <p>Produtos em ótimo estado, aproveite!</p>
     </header>
 
     <div class="container">
@@ -929,6 +949,20 @@
                     if (btn) btn.click();
                 }
             });
+        });
+
+        // Fade-in ao scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.product-card').forEach(card => {
+            observer.observe(card);
         });
     </script>
 </body>
