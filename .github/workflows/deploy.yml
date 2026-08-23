@@ -32,8 +32,10 @@ jobs:
           find img/ -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/img/ \;
           # Images in Brecho/ (all .jpeg)
           find Brecho/ -maxdepth 1 -name '*.jpeg' ! -name '*:Zone.Identifier' -exec cp {} _site/Brecho/ \;
-          # Root images (Guitarra, amazon, bermuda)
+          # Root images (renamed, not WhatsApp originals)
           find . -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/ \;
+          # Root videos (.mp4)
+          find . -maxdepth 1 -name '*.mp4' ! -name '*:Zone.Identifier' -exec cp {} _site/ \;
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
