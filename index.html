@@ -68,6 +68,12 @@
             cursor: pointer;
         }
 
+        .carousel-track video {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .carousel-btn {
             position: absolute;
             top: 50%;
@@ -315,6 +321,47 @@
                         <div class="product-price" style="font-size:1.2rem; color:#2e7d32;">Preços acessíveis</div>
                     </div>
                     <p style="margin-top:0.6rem; font-size:0.85rem; color:#555;">✅ Todos originais &nbsp;|&nbsp; Tam. M e G &nbsp;|&nbsp; <strong>Clique para ver todas as peças →</strong></p>
+                </div>
+            </div>
+
+            <!-- iPhone 11 -->
+            <div class="product-card">
+                <div class="carousel">
+                    <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="WhatsApp Image 2026-08-23 at 16.13.28.jpeg" alt="iPhone 11" onclick="openModal(this)">
+                        <img src="WhatsApp Image 2026-08-23 at 16.13.29.jpeg" alt="iPhone 11" onclick="openModal(this)">
+                        <video src="WhatsApp Video 2026-08-23 at 16.14.01.mp4" controls muted playsinline></video>
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">iPhone 11</div>
+                    <div class="price-row"><div class="product-price">R$ 350</div></div>
+                </div>
+            </div>
+
+            <!-- Bicicleta Elétrica Klosh Rav -->
+            <div class="product-card">
+                <div class="carousel">
+                    <span class="badge">Usado</span>
+                    <div class="carousel-track">
+                        <img src="Bicicleta Elétrica Klosh Rav Com Bateria Removível 500W - foto principal do anuncio.jpeg" alt="Bicicleta Elétrica Klosh Rav" onclick="openModal(this)">
+                        <img src="motoca.jpeg" alt="Bicicleta Elétrica Klosh Rav" onclick="openModal(this)">
+                        <img src="motoca1.jpeg" alt="Bicicleta Elétrica Klosh Rav" onclick="openModal(this)">
+                        <img src="motoca3.jpeg" alt="Bicicleta Elétrica Klosh Rav" onclick="openModal(this)">
+                        <img src="caracteristicas motoca.jpeg" alt="Bicicleta Elétrica Klosh Rav — Características" onclick="openModal(this)">
+                        <video src="motoca2.mp4" controls muted playsinline></video>
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Bicicleta Elétrica Klosh Rav Com Bateria Removível 500W</div>
+                    <div class="price-row"><div class="product-price">R$ 3.890</div></div>
                 </div>
             </div>
 
@@ -614,25 +661,6 @@
                 </div>
             </div>
 
-            <!-- 28. Mochila Head para Raquetes -->
-            <div class="product-card vendido">
-                <div class="carousel">
-                    <span class="badge vendido">Vendido</span>
-                    <div class="sold-overlay"><span>Vendido</span></div>
-                    <div class="carousel-track">
-                        <img src="img/28-mochila-head-1.jpeg" alt="Mochila Head" onclick="openModal(this)">
-                        <img src="img/28-mochila-head-2.jpeg" alt="Mochila Head" onclick="openModal(this)">
-                    </div>
-                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
-                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
-                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Mochila Head para Raquetes de Padel/Tênis Preta</div>
-                    <div class="price-row"><div class="product-price">R$ 90</div><div class="product-compare"><a href="https://www.amazon.com.br/mochila-head-padel/s?k=mochila%20head%20padel" target="_blank">Mochila</a></div></div>
-                </div>
-            </div>
-
             <!-- 29. Cadeira de Escritório -->
             <div class="product-card">
                 <div class="carousel">
@@ -670,6 +698,25 @@
             <!-- ═══════════════════════════════════════════ -->
             <!-- ══ VENDIDOS ══════════════════════════════ -->
             <!-- ═══════════════════════════════════════════ -->
+
+            <!-- 28. Mochila Head para Raquetes -->
+            <div class="product-card vendido">
+                <div class="carousel">
+                    <span class="badge vendido">Vendido</span>
+                    <div class="sold-overlay"><span>Vendido</span></div>
+                    <div class="carousel-track">
+                        <img src="img/28-mochila-head-1.jpeg" alt="Mochila Head" onclick="openModal(this)">
+                        <img src="img/28-mochila-head-2.jpeg" alt="Mochila Head" onclick="openModal(this)">
+                    </div>
+                    <button class="carousel-btn prev" onclick="slide(this,-1)">‹</button>
+                    <button class="carousel-btn next" onclick="slide(this,1)">›</button>
+                    <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span></div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Mochila Head para Raquetes de Padel/Tênis Preta</div>
+                    <div class="price-row"><div class="product-price">R$ 90</div><div class="product-compare"><a href="https://www.amazon.com.br/mochila-head-padel/s?k=mochila%20head%20padel" target="_blank">Mochila</a></div></div>
+                </div>
+            </div>
 
             <!-- 4. Varal -->
             <div class="product-card vendido">
@@ -924,9 +971,9 @@
         function slide(btn, direction) {
             const carousel = btn.closest('.carousel');
             const track = carousel.querySelector('.carousel-track');
-            const images = track.querySelectorAll('img');
+            const items = track.querySelectorAll('img, video');
             const dots = carousel.querySelectorAll('.dot');
-            const total = images.length;
+            const total = items.length;
 
             let current = Math.round(Math.abs(track.style.transform ? parseFloat(track.style.transform.replace('translateX(', '').replace('%)', '')) : 0) / 100);
 
