@@ -24,16 +24,32 @@ jobs:
 
       - name: Prepare site files
         run: |
-          mkdir -p _site/img _site/Brecho
+          mkdir -p _site/img _site/Brecho _site/Cozinha
           # HTML pages
           cp index.html _site/
           cp brecho.html _site/
+          cp cozinha.html _site/
           # Images in img/ (renamed ones only, not WhatsApp originals)
           find img/ -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/img/ \;
           # Images in Brecho/ (all .jpeg)
           find Brecho/ -maxdepth 1 -name '*.jpeg' ! -name '*:Zone.Identifier' -exec cp {} _site/Brecho/ \;
+          # Images in Cozinha/ (all .jpeg, including WhatsApp originals used as product photos)
+          find Cozinha/ -maxdepth 1 -name '*.jpeg' ! -name '*:Zone.Identifier' -exec cp {} _site/Cozinha/ \;
           # Root images (renamed, not WhatsApp originals)
           find . -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/ \;
+          # Root WhatsApp images referenced by index.html (barraca + tapete ads)
+          for f in \
+            "WhatsApp Image 2026-09-01 at 13.13.37.jpeg" \
+            "WhatsApp Image 2026-09-01 at 13.14.03.jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.29 (2).jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.30.jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.31.jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.31 (1).jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.31 (2).jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.32.jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.32 (1).jpeg" \
+            "WhatsApp Image 2026-09-01 at 12.04.33.jpeg" \
+          ; do cp "$f" _site/; done
           # Root videos (.mp4)
           find . -maxdepth 1 -name '*.mp4' ! -name '*:Zone.Identifier' -exec cp {} _site/ \;
 
