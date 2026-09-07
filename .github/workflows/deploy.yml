@@ -29,6 +29,10 @@ jobs:
           cp index.html _site/
           cp brecho.html _site/
           cp cozinha.html _site/
+          # JS (render data-driven) e dados dos anuncios
+          cp render.js _site/
+          mkdir -p _site/data
+          cp data/*.js _site/data/
           # Images in img/ (renamed ones only, not WhatsApp originals)
           find img/ -maxdepth 1 -name '*.jpeg' ! -name 'WhatsApp*' ! -name '*:Zone.Identifier' -exec cp {} _site/img/ \;
           # Images in Brecho/ (all .jpeg)

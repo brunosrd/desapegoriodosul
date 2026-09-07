@@ -1,0 +1,22 @@
+{
+  "name": "desapego-rio-do-sul",
+  "version": "1.0.0",
+  "description": "Site estatico de anuncios (index, brecho, cozinha) com renderizacao data-driven dos anuncios.",
+  "private": true,
+  "scripts": {
+    "serve": "http-server . -p 8080 -c-1 --silent",
+    "test:unit": "node tests/unit/render.test.js",
+    "test:integration": "node tests/integration/brecho.dom.test.js",
+    "test:e2e": "start-server-and-test serve http://127.0.0.1:8080 \"cypress run\"",
+    "test:e2e:open": "start-server-and-test serve http://127.0.0.1:8080 \"cypress open\"",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "predeploy": "npm test"
+  },
+  "devDependencies": {
+    "cypress": "13.15.0",
+    "http-server": "14.1.1",
+    "jsdom": "^25.0.1",
+    "start-server-and-test": "2.0.8"
+  }
+}

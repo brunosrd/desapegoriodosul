@@ -12,3 +12,10 @@
 
 # Build
 _site/
+
+# Node / testes
+node_modules/
+cypress/screenshots/
+cypress/videos/
+npm-debug.log*
+
