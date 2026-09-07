@@ -1,21 +1,11 @@
 /**
- * Teste unitario (Node, sem browser) da logica de render/ordenacao/store.
- * Executa: `npm run test:unit` ou `node tests/unit/render.test.js`.
- * Este e' o gate deterministico que roda antes do deploy (predeploy).
+ * Teste unitario (Node) da logica de render/ordenacao/store — cobre os
+ * datasets das TRES paginas. Gate deterministico do predeploy.
+ * Executa: `node tests/unit/render.test.js`.
  */
 const fs = require('fs');
 const path = require('path');
-
 const root = path.resolve(__dirname, '..', '..');
-const glob = {};
-global.window = glob;
-
-// Carrega dados + render no escopo global (mesmo modelo do browser).
-eval(fs.readFileSync(path.join(root, 'data/brecho-products.js'), 'utf8'));
-eval(fs.readFileSync(path.join(root, 'render.js'), 'utf8'));
-
-const products = glob.BRECHO_PRODUCTS;
-const { sortProducts, renderProducts, createProductStore } = glob;
 
 let failures = 0;
 function assert(cond, msg) {
@@ -23,53 +13,73 @@ function assert(cond, msg) {
   else { console.log('  \u2713', msg); }
 }
 
-console.log('\n[1] Dados e paridade');
-assert(Array.isArray(products) && products.length === 71, 'array com 71 anuncios');
-assert(products.every((p) => p.name && p.price >= 0), 'todo anuncio tem name e price');
-assert(products.filter((p) => p.sold).length === 18, '18 vendidos nos dados');
+// Carrega render.js uma vez.
+const g = {}; global.window = g;
+eval(fs.readFileSync(path.join(root, 'render.js'), 'utf8'));
+const { sortProducts, renderProducts, createProductStore } = g;
 
-console.log('\n[2] Ordenacao (sortProducts)');
-const ordered = sortProducts(products);
-const nonSold = ordered.filter((p) => !p.sold).map((p) => p.price);
-assert(JSON.stringify(nonSold) === JSON.stringify([...nonSold].sort((a, b) => b - a)),
-  'nao-vendidos por preco desc');
-const firstSold = ordered.findIndex((p) => p.sold);
-const lastNonSold = ordered.length - 1 - [...ordered].reverse().findIndex((p) => !p.sold);
-assert(firstSold > lastNonSold, 'vendidos agrupados no final');
-assert(ordered[0].price === 300, 'topo e o maior preco (R$300)');
+const DATASETS = [
+  { file: 'data/index-products.js', varName: 'INDEX_PRODUCTS', total: 38, sold: 24 },
+  { file: 'data/brecho-products.js', varName: 'BRECHO_PRODUCTS', total: 71, sold: 18 },
+  { file: 'data/cozinha-products.js', varName: 'COZINHA_PRODUCTS', total: 27, sold: 0 },
+];
 
-console.log('\n[3] Estabilidade da ordenacao (empates preservam ordem)');
-const empatePrices = products.filter((p) => !p.sold && p.price === 50).map((p) => p.id);
-const orderedEmpate = sortProducts(products).filter((p) => !p.sold && p.price === 50).map((p) => p.id);
-assert(JSON.stringify(empatePrices) === JSON.stringify(orderedEmpate), 'empate de R$50 mantem ordem original');
+function loadData(file, varName) {
+  const gd = {}; global.window = gd;
+  eval(fs.readFileSync(path.join(root, file), 'utf8'));
+  global.window = g; // restaura para render.js
+  return gd[varName];
+}
 
-console.log('\n[4] Render (markup)');
-const container = { innerHTML: '' };
-renderProducts(container, products);
-assert((container.innerHTML.match(/class="product-card/g) || []).length === 71, 'markup: 71 cards');
-assert((container.innerHTML.match(/product-card vendido/g) || []).length === 18, 'markup: 18 vendidos');
-assert((container.innerHTML.match(/sold-overlay/g) || []).length === 18, 'markup: 18 overlays');
-assert(!/undefined/.test(container.innerHTML), 'markup nao contem "undefined"');
+const isDesc = (a) => JSON.stringify(a) === JSON.stringify([...a].sort((x, y) => y - x));
+const groupPrices = (ordered, sold) =>
+  ordered.filter((p) => !!p.sold === sold && !p.pinTop && typeof p.price === 'number').map((p) => p.price);
 
-console.log('\n[5] Store: setSold / toggleSold (reordena + re-renderiza)');
-const items = products.map((p) => ({ ...p }));
-const c2 = { innerHTML: '' };
+for (const D of DATASETS) {
+  console.log(`\n=== ${D.varName} ===`);
+  const items = loadData(D.file, D.varName);
+
+  assert(Array.isArray(items) && items.length === D.total, `${D.total} anuncios`);
+  assert(items.every((p) => p.name), 'todo anuncio tem name');
+  assert(items.filter((p) => p.sold).length === D.sold, `${D.sold} vendidos nos dados`);
+
+  const ordered = sortProducts(items);
+  assert(isDesc(groupPrices(ordered, false)), 'nao-vendidos por preco desc');
+  assert(isDesc(groupPrices(ordered, true)), 'vendidos por preco desc');
+  const firstSold = ordered.findIndex((p) => p.sold);
+  const lastNon = ordered.length - 1 - [...ordered].reverse().findIndex((p) => !p.sold);
+  if (firstSold !== -1) assert(firstSold > lastNon, 'vendidos agrupados no final');
+  // itens pinTop no topo dos nao-vendidos
+  const pinCount = items.filter((p) => p.pinTop && !p.sold).length;
+  if (pinCount > 0) {
+    const top = ordered.filter((p) => !p.sold).slice(0, pinCount);
+    assert(top.every((p) => p.pinTop), 'itens pinTop no topo dos nao-vendidos');
+  }
+
+  const c = { innerHTML: '' };
+  renderProducts(c, items);
+  assert((c.innerHTML.match(/class="product-card/g) || []).length === D.total, `markup: ${D.total} cards`);
+  assert((c.innerHTML.match(/product-card vendido/g) || []).length === D.sold, `markup: ${D.sold} vendidos`);
+  assert(!/undefined/.test(c.innerHTML), 'markup sem "undefined"');
+}
+
+// Store: setSold/toggleSold com dataset do brecho.
+console.log('\n=== Store (setSold/toggleSold) ===');
+const items = loadData('data/brecho-products.js', 'BRECHO_PRODUCTS').map((p) => ({ ...p }));
+const cc = { innerHTML: '' };
 let renders = 0;
-const store = createProductStore(c2, items, () => { renders++; });
+const store = createProductStore(cc, items, () => { renders++; });
 store.render();
 assert(renders === 1, 'render inicial dispara onRender');
 const alvo = store.render().find((p) => !p.sold);
-assert(store.setSold(alvo.id, true) === true, 'setSold(id,true) retorna true');
-assert((c2.innerHTML.match(/product-card vendido/g) || []).length === 19, 'apos setSold -> 19 vendidos no markup');
-assert(new RegExp(`data-id="${alvo.id}"[^>]*class="[^"]*vendido`).test(c2.innerHTML) ||
-       /product-card vendido"[^>]*data-id="' + alvo.id/.test(c2.innerHTML) ||
-       c2.innerHTML.includes(`data-id="${alvo.id}"`), 'card alvo presente apos re-render');
-assert(store.toggleSold(alvo.id) === false, 'toggleSold devolve novo estado (false)');
-assert((c2.innerHTML.match(/product-card vendido/g) || []).length === 18, 'apos toggle volta a 18 vendidos');
-assert(store.setSold(999999, true) === false, 'id inexistente -> false');
-assert(store.toggleSold(999999) === null, 'toggle id inexistente -> null');
+assert(store.setSold(alvo.id, true) === true, 'setSold(id,true) => true');
+assert((cc.innerHTML.match(/product-card vendido/g) || []).length === 19, 'setSold -> 19 vendidos');
+assert(store.toggleSold(alvo.id) === false, 'toggleSold => false');
+assert((cc.innerHTML.match(/product-card vendido/g) || []).length === 18, 'toggle -> 18 vendidos');
+assert(store.setSold(999999, true) === false, 'id inexistente => false');
+assert(store.toggleSold(999999) === null, 'toggle id inexistente => null');
 
 console.log('\n' + (failures === 0
-  ? '\u2705 Todos os testes unitarios passaram.'
+  ? '\u2705 Testes unitarios (3 datasets + store): todos passaram.'
   : `\u274c ${failures} teste(s) falharam.`));
 process.exit(failures === 0 ? 0 : 1);

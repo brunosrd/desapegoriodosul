@@ -1,52 +1,50 @@
 /// <reference types="cypress" />
-// Funcionalidade: Flag `sold` + API do store (setSold/toggleSold).
-// Ao alternar vendido/nao-vendido, o card deve MUDAR de formato e a lista REORDENAR.
+// Funcionalidade: Flag sold + API setSold/toggleSold (reordena + reformata) — TODAS as paginas.
 
-describe('Flag sold e API de toggle (reordena + re-renderiza)', () => {
-  beforeEach(() => cy.visitBrecho());
+Cypress.PAGES.forEach((PAGE) => {
+  describe(`Toggle vendido/nao-vendido [${PAGE.name}]`, () => {
+    beforeEach(() => cy.visitPage(PAGE.url));
 
-  it('vendido tem badge cinza + overlay; nao-vendido nao tem overlay', () => {
-    cy.get('#products-grid .product-card.vendido').first().within(() => {
-      cy.get('.badge.vendido').should('contain', 'Vendido');
-      cy.get('.sold-overlay').should('exist');
+    it('vendido tem badge cinza + overlay; nao-vendido nao tem overlay', () => {
+      cy.get('#products-grid .product-card.vendido').then(($v) => {
+        if ($v.length) {
+          cy.wrap($v.first()).within(() => {
+            cy.get('.badge.vendido').should('contain', 'Vendido');
+            cy.get('.sold-overlay').should('exist');
+          });
+        }
+      });
+      cy.get('#products-grid .product-card:not(.vendido)').first().within(() => {
+        cy.get('.sold-overlay').should('not.exist');
+      });
     });
-    cy.get('#products-grid .product-card:not(.vendido)').first().within(() => {
-      cy.get('.sold-overlay').should('not.exist');
-    });
-  });
 
-  it('setSold(id,true) move o anuncio para o grupo de vendidos e troca o formato', () => {
-    cy.window().then((win) => {
-      // pega um anuncio nao-vendido de maior preco (topo)
-      const alvo = win.brechoStore.render().find((p) => !p.sold);
-      const id = alvo.id;
-      const soldAntes = win.document.querySelectorAll('#products-grid .product-card.vendido').length;
+    it('setSold move para vendidos e troca o formato; toggle reverte e reordena', () => {
+      cy.window().then((win) => {
+        const store = win[PAGE.store];
+        const alvo = store.render().find((p) => !p.sold && typeof p.price === 'number');
+        expect(alvo, 'ha anuncio nao-vendido com preco').to.exist;
+        const id = alvo.id;
+        const antes = win.document.querySelectorAll('#products-grid .product-card.vendido').length;
 
-      win.brechoStore.setSold(id, true);
+        store.setSold(id, true);
+        cy.get('#products-grid .product-card.vendido').should('have.length', antes + 1);
+        cy.get(`#products-grid .product-card[data-id="${id}"]`)
+          .should('have.class', 'vendido')
+          .within(() => cy.get('.sold-overlay').should('exist'));
 
-      cy.get('#products-grid .product-card.vendido').should('have.length', soldAntes + 1);
-      cy.get(`#products-grid .product-card[data-id="${id}"]`)
-        .should('have.class', 'vendido')
-        .within(() => cy.get('.sold-overlay').should('exist'));
-    });
-  });
-
-  it('toggleSold devolve o anuncio para nao-vendido e reordena por preco', () => {
-    cy.window().then((win) => {
-      const alvo = win.brechoStore.render().find((p) => !p.sold);
-      const id = alvo.id;
-      win.brechoStore.setSold(id, true);   // vira vendido
-      win.brechoStore.toggleSold(id);       // volta a nao-vendido
-
-      cy.get(`#products-grid .product-card[data-id="${id}"]`)
-        .should('not.have.class', 'vendido')
-        .within(() => cy.get('.sold-overlay').should('not.exist'));
-
-      // reordenacao mantida: nao-vendidos por preco desc
-      cy.get('#products-grid .product-card:not(.vendido)').then(($c) => {
-        const p = Cypress._.map($c.toArray(), (el) =>
-          parseInt(el.querySelector('.product-price').innerText.replace(/[^\d]/g, ''), 10));
-        expect(p).to.deep.equal([...p].sort((a, b) => b - a));
+        cy.window().then((w2) => {
+          w2[PAGE.store].toggleSold(id);
+          cy.get(`#products-grid .product-card[data-id="${id}"]`).should('not.have.class', 'vendido');
+          cy.get('#products-grid .product-card:not(.vendido)').then(($c) => {
+            const p = Cypress._.map($c.toArray(), (el) => {
+              const t = el.querySelector('.product-price');
+              const n = t ? t.innerText.replace(/[^\d]/g, '') : '';
+              return n ? parseInt(n, 10) : null;
+            }).filter((n) => n != null);
+            expect(JSON.stringify(p)).to.equal(JSON.stringify([...p].sort((a, b) => b - a)));
+          });
+        });
       });
     });
   });

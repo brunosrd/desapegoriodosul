@@ -19,9 +19,13 @@ Páginas:
 
 | Página         | Conteúdo                                              |
 |----------------|-------------------------------------------------------|
-| `index.html`   | Vitrine principal (eletro, móveis, esportes, etc.)    |
-| `brecho.html`  | Brechó de roupas/calçados — **renderização data-driven** |
-| `cozinha.html` | Itens de cozinha                                      |
+| `index.html`   | Vitrine principal — **data-driven** (`data/index-products.js`)   |
+| `brecho.html`  | Brechó de roupas/calçados — **data-driven** (`data/brecho-products.js`) |
+| `cozinha.html` | Itens de cozinha — **data-driven** (`data/cozinha-products.js`)  |
+
+As **três páginas** usam o mesmo motor de renderização (`render.js`) e o mesmo
+padrão: um `data/<pagina>-products.js` + `<div id="products-grid">` vazio +
+bootstrap que cria o store da página.
 
 Idioma do conteúdo e da documentação: **pt-BR**.
 
@@ -55,8 +59,8 @@ Fluxo no `brecho.html`:
 </script>
 ```
 
-> `index.html` e `cozinha.html` ainda usam cards estáticos. Ao migrá-las,
-> replicar o mesmo padrão (um `data/<pagina>-products.js` + `render.js`).
+> As três páginas seguem este padrão. Cada uma expõe seu store global:
+> `indexStore`, `brechoStore`, `cozinhaStore`.
 
 ### 2.2 Modelo de dados de um anúncio
 
@@ -76,6 +80,19 @@ Fluxo no `brecho.html`:
   sold: false                  // ← ÚNICA flag para marcar vendido/não-vendido
 }
 ```
+
+**Campos opcionais/especiais** (usados sobretudo no `index.html`):
+
+| Campo | Uso |
+|-------|-----|
+| `pinTop: true` | Fixa o item no topo do seu grupo (cards de entrada sem preço). |
+| `priceText` | Rótulo de preço não-numérico (ex.: "Preços acessíveis"). |
+| `priceRow: true` | Envolve o preço em `.price-row` (layout do index). |
+| `compareUrl` / `compareLabel` | Link "comparar preço" ao lado do preço. |
+| `link` | Torna o card inteiro clicável (navega para outra página). |
+| `cardStyle` / `nameStyle` / `priceStyle` | Estilos inline pontuais. |
+| `extraHtml` | HTML extra dentro do `.product-info` (ex.: parágrafo de brinde). |
+| `images[].style` / `images[].noZoom` | Estilo por imagem / imagem que não abre modal. |
 
 ### 2.3 API pública (`render.js`)
 
@@ -107,12 +124,15 @@ Comportamento garantido do store ao alternar `sold`:
 
 ## 3. Regras de negócio
 
-1. **Ordenação dos não-vendidos**: por **preço decrescente** (maior preço primeiro).
-2. **Agrupamento dos vendidos**: todos os anúncios vendidos ficam **no final**,
-   depois de todos os não-vendidos.
-3. **Estabilidade**: em empate de preço, mantém-se a ordem original do array
+1. **Não-vendidos primeiro, vendidos no final.**
+2. **Dentro de cada grupo** (não-vendidos e vendidos), ordenar por **preço
+   decrescente** (maior preço primeiro). Esta regra vale para **todas as páginas**.
+3. **Itens de entrada/destaque sem preço numérico** (ex.: cards "Brechó" e
+   "Cozinha" no `index.html`, com `priceText` e `pinTop: true`) ficam no **topo**
+   do grupo de não-vendidos.
+4. **Estabilidade**: em empate de preço, mantém-se a ordem original do array
    (ordenação estável) — evita "pulos" visuais ao editar dados.
-4. **Marcar vendido/não-vendido**: alterar **apenas** o campo `sold` do anúncio
+5. **Marcar vendido/não-vendido**: alterar **apenas** o campo `sold` do anúncio
    (ou usar `store.setSold`/`store.toggleSold`). Nunca editar markup à mão.
 5. **Badges**:
    - `badge original` (verde) → peça original.
@@ -129,22 +149,24 @@ Comportamento garantido do store ao alternar `sold`:
 
 ## 4. Estratégia de testes (obrigatória antes do deploy)
 
-Princípio: **cada funcionalidade tem pelo menos um teste automatizado**, e
-`npm test` deve passar **antes de qualquer deploy** (hook `predeploy`).
+Princípio: **cada funcionalidade tem pelo menos um teste automatizado**, os
+testes **cobrem todas as páginas** (index, brechó, cozinha), e `npm test` deve
+passar **antes de qualquer deploy** (hook `predeploy`).
 
 ### 4.1 Camadas
 
-| Camada | Ferramenta | Arquivo(s) | Roda sem browser? |
-|--------|-----------|------------|-------------------|
-| Unitário | Node | `tests/unit/render.test.js` | ✅ Sim |
-| Integração DOM | Node + jsdom | `tests/integration/brecho.dom.test.js` | ✅ Sim |
-| E2E | Cypress | `cypress/e2e/*.cy.js` | ❌ Requer browser |
+| Camada | Ferramenta | Arquivo(s) | Cobre | Roda sem browser? |
+|--------|-----------|------------|-------|-------------------|
+| Unitário | Node | `tests/unit/render.test.js` | 3 datasets + store | ✅ Sim |
+| Integração DOM | Node + jsdom | `tests/integration/pages.dom.test.js` | 3 páginas reais | ✅ Sim |
+| E2E | Cypress | `cypress/e2e/*.cy.js` | 3 páginas (parametrizado) | ❌ Requer browser |
 
-- **Unitário**: lógica pura de `sortProducts`/`renderProducts`/store (ordenação,
-  estabilidade, markup, toggle). Gate determinístico e rápido.
-- **Integração DOM**: carrega o `brecho.html` real com jsdom, executa os scripts
-  e valida o DOM renderizado (paridade de contagem, ordenação, toggle, modal).
-- **E2E (Cypress)**: valida a experiência real no browser.
+- **Unitário**: lógica pura de `sortProducts`/`renderProducts`/store validada
+  contra os três datasets (`INDEX_PRODUCTS`, `BRECHO_PRODUCTS`, `COZINHA_PRODUCTS`).
+- **Integração DOM**: carrega cada HTML real com jsdom, executa os scripts e
+  valida o DOM (contagem, ordenação por grupo, agrupamento de vendidos, toggle, modal).
+- **E2E (Cypress)**: os specs iteram sobre `Cypress.PAGES` — cada teste roda nas
+  três páginas.
 
 ### 4.2 Mapa funcionalidade → teste (Cypress)
 

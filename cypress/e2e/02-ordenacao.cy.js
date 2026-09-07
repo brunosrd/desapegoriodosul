@@ -1,41 +1,41 @@
 /// <reference types="cypress" />
-// Funcionalidade: Ordenacao por preco.
-// Regra: nao-vendidos por preco DECRESCENTE; vendidos agrupados no FINAL.
+// Funcionalidade: Ordenacao por preco (regra unica do site) — TODAS as paginas.
+// Nao-vendidos primeiro; vendidos no final; cada grupo por preco DECRESCENTE.
 
-describe('Ordenacao por preco e agrupamento de vendidos', () => {
-  beforeEach(() => cy.visitBrecho());
+function precosGrupo(seletor) {
+  return cy.get(seletor).then(($cards) =>
+    Cypress._.map($cards.toArray(), (el) => {
+      const t = el.querySelector('.product-price');
+      const n = t ? t.innerText.replace(/[^\d]/g, '') : '';
+      return n ? parseInt(n, 10) : null;
+    }).filter((n) => n != null)
+  );
+}
+const desc = (a) => JSON.stringify(a) === JSON.stringify([...a].sort((x, y) => y - x));
 
-  function precos($cards) {
-    return Cypress._.map($cards.toArray(), (el) => {
-      const txt = el.querySelector('.product-price').innerText;
-      return parseInt(txt.replace(/[^\d]/g, ''), 10);
+Cypress.PAGES.forEach((PAGE) => {
+  describe(`Ordenacao e agrupamento [${PAGE.name}]`, () => {
+    beforeEach(() => cy.visitPage(PAGE.url));
+
+    it('vendidos aparecem depois dos nao-vendidos', () => {
+      cy.get('#products-grid .product-card').then(($c) => {
+        const sold = Cypress._.map($c.toArray(), (el) => el.classList.contains('vendido'));
+        const firstSold = sold.indexOf(true);
+        const lastNon = sold.lastIndexOf(false);
+        if (firstSold !== -1) expect(firstSold).to.be.greaterThan(lastNon);
+      });
     });
-  }
 
-  it('nao-vendidos aparecem antes dos vendidos', () => {
-    cy.get('#products-grid .product-card').then(($cards) => {
-      const sold = Cypress._.map($cards.toArray(), (el) => el.classList.contains('vendido'));
-      const firstSold = sold.indexOf(true);
-      const lastNonSold = sold.lastIndexOf(false);
-      if (firstSold !== -1) expect(firstSold).to.be.greaterThan(lastNonSold);
+    it('nao-vendidos ordenados por preco desc', () => {
+      precosGrupo('#products-grid .product-card:not(.vendido)').then((p) => {
+        expect(desc(p), `precos: ${p}`).to.be.true;
+      });
     });
-  });
 
-  it('nao-vendidos estao ordenados por preco decrescente', () => {
-    cy.get('#products-grid .product-card:not(.vendido)').then(($cards) => {
-      const p = precos($cards);
-      const ordenado = [...p].sort((a, b) => b - a);
-      expect(p).to.deep.equal(ordenado);
-    });
-  });
-
-  it('o anuncio de maior preco (nao-vendido) e o primeiro card', () => {
-    cy.window().its('BRECHO_PRODUCTS').then((data) => {
-      const maxNonSold = Math.max(...data.filter((x) => !x.sold).map((x) => x.price));
-      cy.get('#products-grid .product-card').first().find('.product-price')
-        .invoke('text').then((t) => {
-          expect(parseInt(t.replace(/[^\d]/g, ''), 10)).to.equal(maxNonSold);
-        });
+    it('vendidos ordenados por preco desc', () => {
+      precosGrupo('#products-grid .product-card.vendido').then((p) => {
+        expect(desc(p), `precos: ${p}`).to.be.true;
+      });
     });
   });
 });

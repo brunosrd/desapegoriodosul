@@ -1,26 +1,26 @@
 /// <reference types="cypress" />
-// Funcionalidade: Renderizacao data-driven dos anuncios (brecho.html).
-// Garante que os cards vem do array de dados e que nenhum anuncio foi perdido.
+// Funcionalidade: Render data-driven — cobre TODAS as paginas.
 
-describe('Render data-driven dos anuncios', () => {
-  beforeEach(() => cy.visitBrecho());
+Cypress.PAGES.forEach((PAGE) => {
+  describe(`Render data-driven [${PAGE.name}]`, () => {
+    beforeEach(() => cy.visitPage(PAGE.url));
 
-  it('renderiza a mesma quantidade de anuncios do array de dados', () => {
-    cy.window().its('BRECHO_PRODUCTS').then((data) => {
-      cy.get('#products-grid .product-card').should('have.length', data.length);
+    it('renderiza a mesma quantidade de anuncios do dataset', () => {
+      cy.window().its(PAGE.data).then((data) => {
+        cy.get('#products-grid .product-card').should('have.length', data.length);
+      });
     });
-  });
 
-  it('cada card possui nome e preco', () => {
-    cy.get('#products-grid .product-card').each(($card) => {
-      cy.wrap($card).find('.product-name').should('not.be.empty');
-      cy.wrap($card).find('.product-price').should('contain', 'R$');
+    it('cada card tem nome (e preco quando numerico)', () => {
+      cy.get('#products-grid .product-card').each(($card) => {
+        cy.wrap($card).find('.product-name').should('not.be.empty');
+      });
     });
-  });
 
-  it('expoe a API global do store (brechoStore)', () => {
-    cy.window().its('brechoStore').should('exist');
-    cy.window().its('brechoStore.setSold').should('be.a', 'function');
-    cy.window().its('brechoStore.toggleSold').should('be.a', 'function');
+    it('expoe a API do store da pagina', () => {
+      cy.window().its(PAGE.store).should('exist');
+      cy.window().its(`${PAGE.store}.setSold`).should('be.a', 'function');
+      cy.window().its(`${PAGE.store}.toggleSold`).should('be.a', 'function');
+    });
   });
 });

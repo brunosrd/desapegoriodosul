@@ -22,16 +22,27 @@
   }
 
   /**
-   * Ordena os anuncios: nao-vendidos (preco desc) e depois vendidos.
-   * Ordenacao estavel — empates mantem a ordem de entrada.
+   * Ordena os anuncios seguindo a regra unica do site:
+   *  1. Nao-vendidos primeiro; vendidos no final.
+   *  2. Dentro de cada grupo, preco DECRESCENTE.
+   *  3. Itens fixados (`pinTop: true`) ou sem preco numerico ficam no topo do
+   *     seu grupo (ex.: cards de entrada "Brecho"/"Cozinha" sem preco).
+   *  4. Ordenacao estavel: empates mantem a ordem original do array.
    */
   function sortProducts(items) {
+    function priceValue(p) {
+      // pinTop ou preco nao-numerico => topo do grupo (Infinity).
+      if (p.pinTop) return Infinity;
+      var n = typeof p.price === 'number' ? p.price : NaN;
+      return isNaN(n) ? Infinity : n;
+    }
     var indexed = items.map(function (p, i) { return { p: p, i: i }; });
     indexed.sort(function (a, b) {
       // vendidos por ultimo
       if (!!a.p.sold !== !!b.p.sold) return a.p.sold ? 1 : -1;
       // dentro do mesmo grupo, preco desc
-      if (b.p.price !== a.p.price) return b.p.price - a.p.price;
+      var pa = priceValue(a.p), pb = priceValue(b.p);
+      if (pb !== pa) return pb - pa;
       // empate: ordem original (estavel)
       return a.i - b.i;
     });
@@ -41,8 +52,11 @@
   function buildCarousel(product) {
     var imgs = product.images || [];
     var slides = imgs.map(function (img) {
-      return '<img src="' + escapeHtml(img.src) + '" alt="' + escapeHtml(img.alt) +
-        '" onclick="openModal(this)">';
+      var style = img.style ? ' style="' + escapeHtml(img.style) + '"' : '';
+      // cards de entrada (link) nao abrem modal: imagem sem onclick.
+      var onclick = (img.noZoom || product.link) ? '' : ' onclick="openModal(this)"';
+      return '<img src="' + escapeHtml(img.src) + '" alt="' + escapeHtml(img.alt) + '"' +
+        onclick + style + '>';
     }).join('\n                    ');
 
     var dots = imgs.map(function (_, i) {
@@ -78,10 +92,33 @@
   function buildInfo(product) {
     var parts = [];
     if (product.type) parts.push('<div class="product-type">' + escapeHtml(product.type) + '</div>');
-    if (product.name) parts.push('<div class="product-name">' + escapeHtml(product.name) + '</div>');
+    if (product.name) {
+        var nameStyle = product.nameStyle ? ' style="' + escapeHtml(product.nameStyle) + '"' : '';
+        parts.push('<div class="product-name"' + nameStyle + '>' + escapeHtml(product.name) + '</div>');
+    }
     if (product.brand) parts.push('<div class="product-brand">' + escapeHtml(product.brand) + '</div>');
     if (product.size) parts.push('<span class="product-size">' + escapeHtml(product.size) + '</span>');
-    if (product.priceLabel) parts.push('<div class="product-price">' + escapeHtml(product.priceLabel) + '</div>');
+
+    // Preco: aceita priceText (rotulo livre) ou priceLabel (numerico formatado).
+    var priceLabel = product.priceText || product.priceLabel;
+    if (priceLabel) {
+      var priceStyle = product.priceStyle ? ' style="' + escapeHtml(product.priceStyle) + '"' : '';
+      var priceHtml = '<div class="product-price"' + priceStyle + '>' + escapeHtml(priceLabel) + '</div>';
+      // link de comparacao de preco (opcional)
+      if (product.compareUrl) {
+        priceHtml += '<div class="product-compare"><a href="' + escapeHtml(product.compareUrl) +
+          '" target="_blank">' + escapeHtml(product.compareLabel || 'Comparar') + '</a></div>';
+      }
+      // price-row envolve preco + comparacao (usado no index)
+      if (product.priceRow) {
+        parts.push('<div class="price-row">' + priceHtml + '</div>');
+      } else {
+        parts.push(priceHtml);
+      }
+    }
+    // conteudo extra (ex.: paragrafo dos cards de entrada Brecho/Cozinha)
+    if (product.extraHtml) parts.push(product.extraHtml);
+
     return '<div class="product-info">\n                ' +
       parts.join('\n                ') +
       '\n            </div>';
@@ -89,8 +126,12 @@
 
   function buildCard(product) {
     var cls = 'product-card' + (product.sold ? ' vendido' : '');
-    return '<div class="' + cls + '" data-id="' + escapeHtml(product.id) +
-      '" data-price="' + escapeHtml(product.price) +
+    var attrs = '';
+    if (product.cardStyle) attrs += ' style="' + escapeHtml(product.cardStyle) + '"';
+    if (product.link) attrs += ' onclick="window.location=\'' + escapeHtml(product.link) + '\'"';
+    return '<div class="' + cls + '"' + attrs +
+      ' data-id="' + escapeHtml(product.id) +
+      '" data-price="' + escapeHtml(typeof product.price === 'number' ? product.price : '') +
       '" data-sold="' + (product.sold ? 'true' : 'false') + '">\n            ' +
       buildCarousel(product) + '\n            ' +
       buildInfo(product) + '\n        </div>';

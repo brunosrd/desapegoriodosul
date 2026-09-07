@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "http-server . -p 8080 -c-1 --silent",
     "test:unit": "node tests/unit/render.test.js",
-    "test:integration": "node tests/integration/brecho.dom.test.js",
+    "test:integration": "node tests/integration/pages.dom.test.js",
     "test:e2e": "start-server-and-test serve http://127.0.0.1:8080 \"cypress run\"",
     "test:e2e:open": "start-server-and-test serve http://127.0.0.1:8080 \"cypress open\"",
     "test": "npm run test:unit && npm run test:integration",
