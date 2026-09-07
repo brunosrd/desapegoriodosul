@@ -15,7 +15,7 @@ const assert = (c, m) => { if (!c) { console.error('  \u2717 FAIL:', m); failure
 
 const PAGES = [
   { file: 'index.html', store: 'indexStore', total: 38, sold: 24 },
-  { file: 'brecho.html', store: 'brechoStore', total: 71, sold: 18 },
+  { file: 'brecho.html', store: 'brechoStore', total: 71, sold: 19 },
   { file: 'cozinha.html', store: 'cozinhaStore', total: 27, sold: 0 },
 ];
 

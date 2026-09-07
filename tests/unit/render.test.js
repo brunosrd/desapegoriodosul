@@ -20,7 +20,7 @@ const { sortProducts, renderProducts, createProductStore } = g;
 
 const DATASETS = [
   { file: 'data/index-products.js', varName: 'INDEX_PRODUCTS', total: 38, sold: 24 },
-  { file: 'data/brecho-products.js', varName: 'BRECHO_PRODUCTS', total: 71, sold: 18 },
+  { file: 'data/brecho-products.js', varName: 'BRECHO_PRODUCTS', total: 71, sold: 19 },
   { file: 'data/cozinha-products.js', varName: 'COZINHA_PRODUCTS', total: 27, sold: 0 },
 ];
 
@@ -71,11 +71,12 @@ let renders = 0;
 const store = createProductStore(cc, items, () => { renders++; });
 store.render();
 assert(renders === 1, 'render inicial dispara onRender');
+const base = items.filter((p) => p.sold).length;
 const alvo = store.render().find((p) => !p.sold);
 assert(store.setSold(alvo.id, true) === true, 'setSold(id,true) => true');
-assert((cc.innerHTML.match(/product-card vendido/g) || []).length === 19, 'setSold -> 19 vendidos');
+assert((cc.innerHTML.match(/product-card vendido/g) || []).length === base + 1, `setSold -> ${base + 1} vendidos`);
 assert(store.toggleSold(alvo.id) === false, 'toggleSold => false');
-assert((cc.innerHTML.match(/product-card vendido/g) || []).length === 18, 'toggle -> 18 vendidos');
+assert((cc.innerHTML.match(/product-card vendido/g) || []).length === base, `toggle -> ${base} vendidos`);
 assert(store.setSold(999999, true) === false, 'id inexistente => false');
 assert(store.toggleSold(999999) === null, 'toggle id inexistente => null');
 
